@@ -82,7 +82,7 @@ export const tools: {
     name: "Review Poster Maker",
     slug: "review-poster",
     promise: "Turn a good visit into a lasting recommendation.",
-    status: "Planned",
+    status: "Live",
     audience: "shoreline-businesses",
   },
   {
@@ -90,7 +90,7 @@ export const tools: {
     name: "Event Flyer Maker",
     slug: "event-flyer",
     promise: "Bring your next coastal gathering into view.",
-    status: "Planned",
+    status: "Live",
     audience: "shoreline-businesses",
   },
   {
@@ -98,7 +98,7 @@ export const tools: {
     name: "Offer Board Maker",
     slug: "offer-board",
     promise: "Put your latest offers where they’ll be noticed.",
-    status: "Planned",
+    status: "Live",
     audience: "shoreline-businesses",
   },
   {
@@ -106,7 +106,7 @@ export const tools: {
     name: "Job Post Maker",
     slug: "job-post",
     promise: "Find the right people for your place on the coast.",
-    status: "Planned",
+    status: "Live",
     audience: "shoreline-businesses",
   },
   {
@@ -114,15 +114,15 @@ export const tools: {
     name: "Harbour Notice Maker",
     slug: "notice",
     promise: "Keep your community clearly in the picture.",
-    status: "Planned",
+    status: "Live",
     audience: "shoreline-businesses",
   },
   {
     number: 14,
     name: "Social Post Kit",
     slug: "social-kit",
-    promise: "Five matching posts. One unmistakable business.",
-    status: "Planned",
+    promise: "Three matching sizes. One unmistakable business.",
+    status: "Live",
     audience: "shoreline-businesses",
   },
 ];

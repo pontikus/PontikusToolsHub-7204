@@ -131,6 +131,8 @@ export async function downloadCanvases(
   format: "png" | "pdf",
   name: string,
   paper: [number, number],
+  papers?: [number, number][],
+  labels?: string[],
 ) {
   if (format === "png") {
     if (canvases.length === 1) {
@@ -140,21 +142,23 @@ export async function downloadCanvases(
     const { default: JSZip } = await import("jszip");
     const zip = new JSZip();
     for (let i = 0; i < canvases.length; i++)
-      zip.file(`${name}-${String(i + 1).padStart(2, "0")}.png`, await pngBlob(canvases[i]));
+      zip.file(`${name}-${labels?.[i] || String(i + 1).padStart(2, "0")}.png`, await pngBlob(canvases[i]));
     saveFile(await zip.generateAsync({ type: "blob" }), name + ".zip");
   } else {
     const { jsPDF } = await import("jspdf");
-    const orientation = paper[0] > paper[1] ? "landscape" : "portrait";
-    const pdf = new jsPDF({ orientation, unit: "mm", format: paper, compress: true });
+    const first = papers?.[0] || paper;
+    const orientation = first[0] > first[1] ? "landscape" : "portrait";
+    const pdf = new jsPDF({ orientation, unit: "mm", format: first, compress: true });
     canvases.forEach((canvas, i) => {
-      if (i) pdf.addPage(paper, orientation);
+      const size = papers?.[i] || paper;
+      if (i) pdf.addPage(size, size[0] > size[1] ? "landscape" : "portrait");
       pdf.addImage(
         canvas.toDataURL("image/png"),
         "PNG",
         0,
         0,
-        paper[0],
-        paper[1],
+        size[0],
+        size[1],
         undefined,
         "FAST",
       );

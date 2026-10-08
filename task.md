@@ -1,4 +1,13 @@
 # Stage one
+# Stage four — complete
+- Build tools 9–14 in the original managed project; no GitHub push or deployment.
+- Preserve workflow, Vite/asset helper hashes and protected files. Extend shared fields/downloads only through optional props.
+- Add browser-local QR, measured offer pagination, story safe area and mixed-ratio PDFs; test max fields, 390px, exports and /test/ build.
+- Known protected analytics root /runable.js remains a hosting conflict to report.
+- Verified: six unit tests / 315 assertions; all six makers at maximum field/entry lengths and 390px; three styles, uploads, both PNG/PDF formats, ZIP/individual social exports, frame gate and embed mode. Story top/bottom 250px remain clear, including frame text. Tools 1–8 render in regression smoke check, original renderer files untouched.
+- Typecheck, lint, /test/ production build pass; large-bundle warning only. All protected and hosting hashes unchanged. /test/ tool routes and back links pass; only protected /runable.js returns 404.
+- Admin guide updated with limits, safety notes, formats and hosting conflict. Root managed preview restored at 4200. No public deployment or Publish-state verification.
+
 - Approved: supplied brand, browser-only maker, 18 supplied regions.
 - Platform: managed React web app. No maker API, database, login or persistent input storage.
 - Build hub, reusable shell, postcard only. Other 13 catalogue entries planned.

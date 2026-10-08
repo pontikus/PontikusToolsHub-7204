@@ -41,6 +41,7 @@ export function EntryList<T>({
   label,
   empty,
   children,
+  note,
 }: {
   items: T[];
   onChange: (items: T[]) => void;
@@ -48,12 +49,12 @@ export function EntryList<T>({
   label: string;
   empty: () => T;
   children: (item: T, index: number, change: (patch: Partial<T>) => void) => React.ReactNode;
+  note?: string;
 }) {
   return (
     <>
       <p className="sample-note">
-        Up to {max} {label.toLowerCase()} entries. Placeholder content is not a claim of experience
-        or qualifications.
+        {note || `Up to ${max} ${label.toLowerCase()} entries. Placeholder content is not a claim of experience or qualifications.`}
       </p>
       {items.map((item, index) => (
         <div className="entry-card" key={index}>
@@ -120,14 +121,16 @@ export function TextList({
 export function OptionalPhoto({
   value,
   onChange,
+  label = "Optional profile photo",
 }: {
   value: string;
   onChange: (value: string) => void;
+  label?: string;
 }) {
   return (
     <>
       <PhotoUpload
-        label="Optional profile photo"
+        label={label}
         onPhoto={(photos) => {
           if (photos[0]) onChange(photos[0]);
         }}
@@ -136,7 +139,7 @@ export function OptionalPhoto({
         <>
           <img
             src={value}
-            alt="Your locally selected profile"
+            alt={label === "Optional profile photo" ? "Your locally selected profile" : "Your locally selected image"}
             style={{ width: 100, height: 100, objectFit: "cover" }}
           />
           <button className="inline-link" onClick={() => onChange("")}>

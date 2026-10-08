@@ -180,6 +180,10 @@ export function CanvasPreview({
   page,
   pageChange,
   description,
+  pageLabels,
+  papers,
+  individual = false,
+  downloadBlocked = false,
 }: {
   pages: HTMLCanvasElement[];
   ready: boolean;
@@ -190,6 +194,10 @@ export function CanvasPreview({
   page: number;
   pageChange: (index: number) => void;
   description: string;
+  pageLabels?: string[];
+  papers?: [number, number][];
+  individual?: boolean;
+  downloadBlocked?: boolean;
 }) {
   const [busy, setBusy] = useState(""),
     [notice, setNotice] = useState(""),
@@ -200,7 +208,7 @@ export function CanvasPreview({
     setNotice("");
     setDownloadError("");
     try {
-      await downloadCanvases(pages, format, name, paper);
+      await downloadCanvases(pages, format, name, paper, papers, pageLabels);
       setNotice(
         `Downloaded ${pages.length} ${pages.length === 1 ? "page" : "pages"} as ${format === "png" ? (pages.length === 1 ? "PNG" : "PNGs in a ZIP") : "PDF"}.`,
       );
@@ -228,7 +236,7 @@ export function CanvasPreview({
               onClick={() => pageChange(i)}
               aria-pressed={i === current}
             >
-              Page {i + 1}
+              {pageLabels?.[i] || `Page ${i + 1}`}
             </button>
           ))}
         </div>
@@ -249,7 +257,7 @@ export function CanvasPreview({
       </div>
       <div className="preview-meta">
         <span>
-          {paper[0]} × {paper[1]} mm
+          {(papers?.[current] || paper)[0]} × {(papers?.[current] || paper)[1]} mm
         </span>
         <span>
           {pages[current]
@@ -262,7 +270,7 @@ export function CanvasPreview({
         <FormHeading step="04" title="Make it yours to keep." />
         <p>Download the exact canvas shown in your preview. Every page is included.</p>
         <div className="download-buttons">
-          <button className="button" disabled={!ready || !!busy} onClick={() => download("png")}>
+          <button className="button" disabled={!ready || downloadBlocked || !!busy} onClick={() => download("png")}>
             <Download size={17} />
             {busy === "png"
               ? "Preparing PNG…"
@@ -272,13 +280,31 @@ export function CanvasPreview({
           </button>
           <button
             className="button outline"
-            disabled={!ready || !!busy}
+            disabled={!ready || downloadBlocked || !!busy}
             onClick={() => download("pdf")}
           >
             <Download size={17} />
             {busy === "pdf" ? "Preparing PDF…" : "Download PDF"}
           </button>
         </div>
+        {individual && (
+          <div className="download-buttons">
+            {pages.map((canvas, i) => (
+              <button className="button outline" key={i} disabled={!ready || downloadBlocked || !!busy}
+                onClick={async () => {
+                  setBusy(`individual-${i}`);
+                  setDownloadError("");
+                  try {
+                    await downloadCanvases([canvas], "png", `${name}-${pageLabels?.[i] || i + 1}`, papers?.[i] || paper);
+                    setNotice(`Downloaded ${pageLabels?.[i] || `page ${i + 1}`} as PNG.`);
+                  } catch (e) { setDownloadError(e instanceof Error ? e.message : "Download failed."); }
+                  finally { setBusy(""); }
+                }}>
+                Download {pageLabels?.[i] || `page ${i + 1}`} PNG
+              </button>
+            ))}
+          </div>
+        )}
         {notice && (
           <output aria-live="polite" className="success">
             {notice}

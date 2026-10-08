@@ -1,4 +1,5 @@
 # Pontikus Boatyard — design direction
+Stage four: six Shoreline Businesses makers preserve the existing shell and styles. Editorial flyers, plain review QR, measured offer rows, job information and clearly non-authority customer notices. Social kit provides square, portrait and story layouts with a 250px story text exclusion zone. Shared controls are extended only with optional props; tools 1–8 keep their existing defaults. New drawing logic lives in business-canvas.ts. No APIs or database changes.
 
 Brand: deep navy #0B1F3B, gold #C6A04A, cream #F7F3EB, signal blue #0094ff, logo navy #074286.
 Fraunces editorial headings, Archivo body, IBM Plex Mono numbered labels. Google Fonts.
