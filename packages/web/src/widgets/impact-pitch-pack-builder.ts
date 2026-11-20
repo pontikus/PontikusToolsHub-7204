@@ -11,7 +11,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     textArea("outcomes", "What you'll do and what will change", state.outcomes, { hint: "One per line. Use your own numbers only.", rows: 4 }) +
     textArea("measure", "How you'll know it worked", state.measure, { hint: "What you'll count or record, and how often.", rows: 2 }) +
     row2(field("text", "ask", "What you're asking for", state.ask, { attrs: { maxlength: 100, placeholder: "£3,000 and two volunteer days" } }), field("text", "timeframe", "Timeframe", state.timeframe, { attrs: { maxlength: 60 } }));
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
     type: "Generator",
@@ -27,5 +27,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

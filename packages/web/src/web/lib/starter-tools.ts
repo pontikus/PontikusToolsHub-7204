@@ -164,6 +164,29 @@ export const seasonAreasLevel1 = [
   "Contingency",
 ];
 
+// Level 1: the season wheel splits the four Starter areas into eight, each with a tip.
+export const seasonAreasFull: WheelArea[] = [
+  { key: "staffing", label: "Staffing", question: "Do you have the people you need for the busiest weeks, with cover for absences?", fix: seasonAreas[0].fix },
+  { key: "stock", label: "Stock", question: "Are your stock levels set for the season ahead, with the items you cannot run out of counted?", fix: "Count the ten items you sell most and set a reorder level for each before the season starts." },
+  { key: "suppliers", label: "Suppliers", question: "Are your supplier orders, lead times and a back-up supplier confirmed?", fix: "Confirm order dates and lead times with your main suppliers now, and name a second supplier for the items you cannot run out of." },
+  { key: "bookings", label: "Bookings", question: "Are bookings coming in at the pace you need for the season?", fix: "Compare bookings so far with the same week last year and pick the weeks that are behind." },
+  { key: "marketing", label: "Marketing", question: "Is your marketing planned for the quieter weeks, not only the busy ones?", fix: "Find the weeks with the fewest bookings and plan one offer or post for each of them before the season starts." },
+  { key: "premises", label: "Premises", short: "Premises", question: "Are your premises, equipment and safety checks ready for the season?", fix: "Walk the site with a list: repairs, equipment servicing, signage and safety checks, each with a date." },
+  { key: "cash", label: "Cash", question: "Could you cover a slow month or a surprise cost without strain?", fix: "Work out what a slow month costs you and set that amount aside." },
+  { key: "contingency", label: "Contingency", short: "Plan B", question: "Do you know what you would do if the weather, a supplier or a key person let you down?", fix: "Write down what you would cut first if takings drop, and who covers if a key person is off." },
+];
+
+export const seasonTips: Record<string, TipSet> = {
+  staffing: { low: "List your busiest weeks and who works each one, then line up two people you can call on at short notice.", mid: "Add a cover name for each busy week and agree holiday dates now, before the season starts.", high: "Keep a short induction sheet so a new or stand-in person can start quickly." },
+  stock: { low: "Count your best sellers now and set a reorder level for each.", mid: "Check last season's sell-outs and raise the reorder level on those items.", high: "Review slow movers and clear them before the season to free cash and space." },
+  suppliers: { low: "Call your main suppliers this week to confirm lead times and order dates.", mid: "Name a back-up supplier for anything you cannot run out of.", high: "Agree a delivery slot for your busiest weeks so stock arrives before the rush." },
+  bookings: { low: "Look at bookings week by week and pick the three weakest weeks to work on first.", mid: "Offer the weakest weeks to past customers first, before you discount.", high: "Ask for deposits on busy dates to cut no-shows." },
+  marketing: { low: "Plan one post or offer for each quiet week of the season.", mid: "Line up partners, such as nearby businesses, to share each other's offers.", high: "Collect reviews from this season's customers to use in next season's marketing." },
+  premises: { low: "Make a list of repairs and checks with a date for each, starting with safety.", mid: "Book servicing for equipment before the season so it isn't done in a rush.", high: "Do a quick walk-round each week of the season to catch small problems early." },
+  cash: { low: "Work out what a slow month costs and start setting money aside each week.", mid: "Spread big supplier payments so they don't all fall in the same month.", high: "Keep a month's costs in reserve and review it at the end of the season." },
+  contingency: { low: "Write down the three things most likely to go wrong and what you would do for each.", mid: "Share your plan B with staff so anyone can act on it.", high: "Test one part of the plan before the season, such as a weather cancellation message." },
+};
+
 export type WheelResult = {
   score: number; // 0–100
   weakest: WheelArea;

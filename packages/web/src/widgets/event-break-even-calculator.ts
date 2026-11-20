@@ -8,7 +8,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     row2(field("number", "fixed", "Fixed costs", state.fixed, { hint: "Venue, licences, staff, marketing, equipment.", attrs: { min: 0, step: 50 } }), selectField("currency", "Currency", [["£", "£"], ["€", "€"], ["$", "$"]], state.currency)) +
     row2(field("number", "price", "Ticket price", state.price, { attrs: { min: 0, step: 1 } }), field("number", "perHead", "Cost per person", state.perHead, { hint: "Food, drink, wristband, giveaways.", attrs: { min: 0, step: 0.5 } })) +
     `<div class="pkst-row3">${field("number", "feesPct", "Ticket fees (%)", state.feesPct, { attrs: { min: 0, max: 50, step: 0.5 } })}${field("number", "capacity", "Capacity", state.capacity, { attrs: { min: 0, step: 10 } })}${field("number", "expected", "Expected", state.expected, { attrs: { min: 0, step: 10 } })}</div>`;
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
     type: "Calculator",
@@ -41,5 +41,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

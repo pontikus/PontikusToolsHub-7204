@@ -11,7 +11,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     row2(field("number", "fee", "Monthly fee", state.fee, { attrs: { min: 0, step: 50 } }), field("number", "hours", "Hours a month", state.hours, { attrs: { min: 0, step: 1 } })) +
     `<div class="pkst-row3">${field("number", "term", "Minimum term (months)", state.term, { attrs: { min: 1, max: 36, step: 1 } })}${field("number", "notice", "Notice (days)", state.notice, { attrs: { min: 0, max: 180, step: 1 } })}${field("number", "extraRate", "Extra work, per hour", state.extraRate, { attrs: { min: 0, step: 5 } })}</div>` +
     selectField("currency", "Currency", [["£", "£"], ["€", "€"], ["$", "$"]], state.currency);
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
     type: "Generator",
@@ -27,5 +27,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }
