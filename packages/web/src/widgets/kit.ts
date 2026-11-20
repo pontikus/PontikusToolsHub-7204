@@ -33,7 +33,11 @@ export function checkList(key: string, label: string, options: [string, string][
   return `<fieldset class="pkst-field"><legend class="pkst-label">${esc(label)}</legend><ul class="pkst-check pkst-have">${rows}</ul></fieldset>`;
 }
 
-export const row2 = (a: string, b: string) => `<div class="pkst-row2">${a}${b}</div>`;
+export function textArea(key: string, label: string, value: string, o: { hint?: string; rows?: number; max?: number; placeholder?: string } = {}) {
+  return `<label class="pkst-field"><span class="pkst-label">${esc(label)}</span>${o.hint ? `<span class="pkst-hint">${esc(o.hint)}</span>` : ""}<textarea data-k="${esc(key)}" rows="${o.rows ?? 3}" maxlength="${o.max ?? 800}"${o.placeholder ? ` placeholder="${esc(o.placeholder)}"` : ""}>${esc(value)}</textarea></label>`;
+}
+
+export const row2 =(a: string, b: string) => `<div class="pkst-row2">${a}${b}</div>`;
 
 // Draws the shell, the level ladder and the verify button. Returns the two areas a tool fills.
 export function starterShell(
@@ -49,7 +53,7 @@ export function starterShell(
 }
 
 // Keeps `state` in step with the form: data-k fields and choice buttons set state[key],
-// data-row/data-f fields set state.rows[i][f], data-list checkboxes toggle an array.
+// data-row/data-f fields set state.rows[i][f] (or state[data-set][i][f]), data-list checkboxes toggle an array.
 // Buttons with data-act are passed to `onAction`. Copy buttons copy the nearest <pre>.
 export function bindState<S extends Record<string, unknown>>(
   root: HTMLElement,
@@ -67,7 +71,7 @@ export function bindState<S extends Record<string, unknown>>(
       else list.delete(el.value);
       s[el.dataset.list] = [...list];
     } else if (el.dataset.row !== undefined && el.dataset.f) {
-      (s.rows as Record<string, unknown>[])[Number(el.dataset.row)][el.dataset.f] = read(el);
+      (s[el.dataset.set ?? "rows"] as Record<string, unknown>[])[Number(el.dataset.row)][el.dataset.f] = read(el);
     } else if (el.dataset.k && el.tagName !== "BUTTON") {
       s[el.dataset.k] = read(el);
     } else return;
