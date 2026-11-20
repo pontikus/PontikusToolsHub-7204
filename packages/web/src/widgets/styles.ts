@@ -74,6 +74,17 @@ export const css = `
 .pkst-note{font-size:13px;color:var(--m);margin-top:14px !important}
 .pkst-gate h3{font-size:26px;margin-top:6px}
 .pkst-gate-actions{display:flex;flex-wrap:wrap;gap:12px}
+.pkst-upgrade{color:#0b4f8a !important;text-decoration:underline;font-weight:600}
+.pkst-tips{list-style:none;padding:0;margin:14px 0 0}
+.pkst-tips li{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:10px 0;border-top:1px solid #eee8db;font-size:14px}
+.pkst-tips b{font-weight:600}
+.pkst-tips span{font:12px "IBM Plex Mono",monospace;color:var(--m);grid-row:span 2;padding-top:2px;min-width:38px}
+.pkst-tips li.is-weak span{color:var(--weak)}
+.pkst-saved{margin-top:18px;border-top:1px solid var(--l);padding-top:14px}
+.pkst-saved ul{list-style:none;padding:0;margin:10px 0 0}
+.pkst-saved li{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #eee8db}
+.pkst-saved li>span{font-family:"IBM Plex Mono",monospace;font-size:12px}
+.pkst-small{min-height:36px;padding:6px 12px;border:1px solid #bfc2b7;border-radius:3px;background:var(--c);color:var(--n);font:inherit;font-size:12px;cursor:pointer}
 .pkst-privacy{font-size:12px;color:var(--m);margin-top:18px !important}
 @media (max-width:860px){
   .pkst{padding:18px 16px}
