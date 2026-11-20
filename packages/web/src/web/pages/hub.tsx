@@ -53,6 +53,19 @@ import {
   Users,
   GraduationCap,
   BarChart3,
+  MessageSquareHeart,
+  LineChart,
+  UsersRound,
+  PhoneCall,
+  Fish,
+  CalendarRange,
+  Package,
+  HeartHandshake,
+  Leaf,
+  Ticket,
+  Send,
+  Repeat,
+  CloudLightning,
 } from "lucide-react";
 import { Header, Footer, PlaceholderLink } from "../components/brand";
 import { tools } from "../lib/catalogue";
@@ -104,6 +117,19 @@ const icons = [
   Users,
   GraduationCap,
   BarChart3,
+  MessageSquareHeart,
+  LineChart,
+  UsersRound,
+  PhoneCall,
+  Fish,
+  CalendarRange,
+  Package,
+  HeartHandshake,
+  Leaf,
+  Ticket,
+  Send,
+  Repeat,
+  CloudLightning,
 ];
 const groups = [
   {

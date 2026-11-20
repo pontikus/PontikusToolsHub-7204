@@ -107,6 +107,12 @@ export const css = `
 .pkst-learner{display:flex;align-items:center;gap:10px;margin-bottom:8px}
 .pkst-learner span{font:12px "IBM Plex Mono",monospace;color:var(--m);margin-right:auto}
 .pkst-learners .pkst-choice{min-height:36px;padding:6px 10px;font-size:12px}
+.pkst-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:6px}
+.pkst-week label{display:flex;flex-direction:column;gap:4px;font:500 11px "IBM Plex Mono",monospace}
+.pkst-week input{padding-left:6px;padding-right:4px}
+.pkst-days{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.pkst-days label{display:inline-flex;align-items:center;gap:4px;min-height:36px;padding:4px 8px;border:1px solid #c9c9be;border-radius:3px;font:12px "IBM Plex Mono",monospace;cursor:pointer}
+.pkst-days input{margin:0;accent-color:var(--n)}
 .pkst-privacy{font-size:12px;color:var(--m);margin-top:18px !important}
 @media (max-width:860px){
   .pkst{padding:18px 16px}
@@ -115,5 +121,5 @@ export const css = `
   .pkst-ladder li{grid-template-columns:1fr auto}
   .pkst-ladder li>span:nth-child(2){grid-column:1/-1;grid-row:2}
 }
-@media (max-width:420px){.pkst-months{grid-template-columns:repeat(2,minmax(0,1fr))}.pkst-row2{grid-template-columns:1fr}.pkst-row3{grid-template-columns:1fr 1fr 1fr}}
+@media (max-width:420px){.pkst-months{grid-template-columns:repeat(2,minmax(0,1fr))}.pkst-week{grid-template-columns:repeat(4,minmax(0,1fr))}.pkst-row2{grid-template-columns:1fr}.pkst-row3{grid-template-columns:1fr 1fr 1fr}}
 `;
