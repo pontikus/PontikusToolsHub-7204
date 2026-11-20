@@ -71,3 +71,17 @@ export const ladderByType: Record<ToolType, Record<LevelKey, string>> = {
     level3: "Custom fields, shared access, branded, embeddable",
   },
 };
+
+// The level a member can use on a given tool. The pontikus.com page passes the member's
+// plan in as data-audience / data-level; plans for another audience stay at Starter.
+export function unlockedLevel(
+  memberAudience: string | undefined,
+  memberLevel: string | undefined,
+  toolAudience: string,
+  built: LevelKey[],
+): LevelKey {
+  if (!memberLevel || memberAudience !== toolAudience) return "starter";
+  const max = levelOrder.indexOf(memberLevel as LevelKey);
+  if (max < 0) return "starter";
+  return built.filter((l) => levelOrder.indexOf(l) <= max).sort((a, b) => levelOrder.indexOf(b) - levelOrder.indexOf(a))[0] ?? "starter";
+}

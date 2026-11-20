@@ -84,3 +84,34 @@ describe("Profile Strength Checker", () => {
     expect(profileStrength({ services: true, proof: true }).fixes.map((f) => f.key)).toEqual(["reviews", "contact", "photo"]);
   });
 });
+
+import { rankAreas, tipFor, tripAreasFull, tripTips } from "./starter-tools";
+import { unlockedLevel } from "./levels";
+
+describe("Trip Readiness Wheel Level 1", () => {
+  test("eight areas, each with three tips", () => {
+    expect(tripAreasFull).toHaveLength(8);
+    for (const a of tripAreasFull) expect(Object.keys(tripTips[a.key])).toEqual(["low", "mid", "high"]);
+  });
+  test("tip follows the score band", () => {
+    expect(tipFor(tripTips, "route", 2)).toBe(tripTips.route.low);
+    expect(tipFor(tripTips, "route", 6)).toBe(tripTips.route.mid);
+    expect(tipFor(tripTips, "route", 9)).toBe(tripTips.route.high);
+  });
+  test("areas rank weakest first, ties in wheel order", () => {
+    const scores = Object.fromEntries(tripAreasFull.map((a) => [a.key, 7]));
+    scores.food = 3;
+    scores.planb = 3;
+    const ranked = rankAreas(tripAreasFull, scores, tripTips);
+    expect(ranked.slice(0, 2).map((r) => r.area.key)).toEqual(["food", "planb"]);
+    expect(ranked[0].tip).toBe(tripTips.food.low);
+  });
+  test("only a matching paid plan unlocks Level 1", () => {
+    const built = ["starter", "level1"] as const;
+    expect(unlockedLevel("sea-lovers", "level1", "sea-lovers", [...built])).toBe("level1");
+    expect(unlockedLevel("sea-lovers", "level3", "sea-lovers", [...built])).toBe("level1");
+    expect(unlockedLevel("sea-lovers", "starter", "sea-lovers", [...built])).toBe("starter");
+    expect(unlockedLevel("coastal-experts", "level2", "sea-lovers", [...built])).toBe("starter");
+    expect(unlockedLevel(undefined, undefined, "sea-lovers", [...built])).toBe("starter");
+  });
+});

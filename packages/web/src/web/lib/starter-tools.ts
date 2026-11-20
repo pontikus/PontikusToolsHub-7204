@@ -2,7 +2,7 @@
 // so the pages stay thin and the rules can be unit tested.
 
 // ---------- Readiness wheels (Trip and Season) ----------
-export type WheelArea = { key: string; label: string; question: string; fix: string };
+export type WheelArea = { key: string; label: string; question: string; fix: string; short?: string };
 
 export const tripAreas: WheelArea[] = [
   {
@@ -33,6 +33,98 @@ export const tripAreas: WheelArea[] = [
 
 // Areas the full wheel adds at Level 1 (shown in the ladder, not scored at Starter).
 export const tripAreasLevel1 = ["Fitness and skills", "Food and water", "Getting there", "Plan B"];
+
+// ---------- Level 1 (Drift): the full Trip Readiness Wheel ----------
+// Eight areas, and a tip for each one that changes with the score.
+export type TipSet = { low: string; mid: string; high: string };
+
+export const tripAreasFull: WheelArea[] = [
+  ...tripAreas,
+  {
+    key: "fitness",
+    label: "Fitness and skills",
+    question: "Is the trip within what you and everyone coming can comfortably do?",
+    fix: "Pick a shorter or easier version of the trip, or build up to it with one practice outing first.",
+  },
+  {
+    key: "food",
+    label: "Food and water",
+    question: "Have you packed enough to eat and drink for the whole trip, plus some spare?",
+    fix: "Pack water for the full time out and a bit more, plus food you can eat with cold or wet hands.",
+  },
+  {
+    key: "travel",
+    label: "Getting there",
+    short: "Travel",
+    question: "Do you know how you get there and back, including parking, transport times and access?",
+    fix: "Check the last bus, ferry or train back, where you can park, and whether the access path is open.",
+  },
+  {
+    key: "planb",
+    label: "Plan B",
+    short: "Plan B",
+    question: "If something changes on the day, do you know what you will do instead?",
+    fix: "Choose a shorter fallback route or a different spot nearby, and agree the point at which you switch to it.",
+  },
+];
+
+export const tripTips: Record<string, TipSet> = {
+  route: {
+    low: "Write the route down with timings, and set a turn-back time you will stick to even if you feel fine.",
+    mid: "Add a turn-back time to your plan and share the route with someone who is not coming.",
+    high: "Your route is sorted. Take a photo of the map so you have it without signal.",
+  },
+  weather: {
+    low: "Check the forecast and tide times now, and again on the morning. If they look marginal, move the day.",
+    mid: "Look at how the wind and tide change through the day, not just at the start.",
+    high: "Good. Look one last time before you leave, since coastal forecasts change quickly.",
+  },
+  kit: {
+    low: "Lay everything out and check it against the forecast. Fix or replace anything worn before you go.",
+    mid: "Pack one more warm layer than you think you need, and a dry bag for your phone and keys.",
+    high: "Kit is ready. Keep a small spare bag with a dry layer in the car for the trip home.",
+  },
+  safety: {
+    low: "Tell someone your plan and return time today, and save the coastguard number for where you are going.",
+    mid: "Charge your phone fully and carry it in a waterproof case where you can reach it.",
+    high: "You are covered. Agree what your contact should do if you are late back.",
+  },
+  fitness: {
+    low: "Choose an easier version of the trip, or do a short practice outing first.",
+    mid: "Plan rest stops, and check that the slowest person in the group is comfortable with the distance.",
+    high: "You are well within your limits. Keep something in reserve for the way back.",
+  },
+  food: {
+    low: "Pack water for the whole trip plus extra, and food that is easy to eat on the move.",
+    mid: "Add a spare snack and a warm drink in a flask, especially if the trip could run long.",
+    high: "Food and water are covered. Leave a drink and a snack in the car for when you get back.",
+  },
+  travel: {
+    low: "Check how you get there and back, including the last transport home and where you can park.",
+    mid: "Allow extra time for parking and the walk to the water, which often takes longer than expected.",
+    high: "Travel is planned. Note a taxi number in case the last connection is missed.",
+  },
+  planb: {
+    low: "Pick a fallback spot or a shorter route, and decide the point at which you switch to it.",
+    mid: "Tell your group the Plan B before you set off, so nobody argues about it on the day.",
+    high: "You have a clear Plan B. Use it without hesitation if conditions change.",
+  },
+};
+
+export function tipFor(tips: Record<string, TipSet>, key: string, score: number) {
+  const set = tips[key];
+  if (!set) return "";
+  const s = clampScore(score);
+  return s <= 4 ? set.low : s <= 7 ? set.mid : set.high;
+}
+
+// Areas sorted weakest first (ties keep their original order), each with its tailored tip.
+export function rankAreas(areas: WheelArea[], scores: Record<string, number>, tips: Record<string, TipSet>) {
+  return areas
+    .map((area, index) => ({ area, index, score: clampScore(scores[area.key] ?? 1) }))
+    .sort((a, b) => a.score - b.score || a.index - b.index)
+    .map(({ area, score }) => ({ area, score, tip: tipFor(tips, area.key, score) }));
+}
 
 export const seasonAreas: WheelArea[] = [
   {

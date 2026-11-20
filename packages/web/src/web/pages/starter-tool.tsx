@@ -15,6 +15,12 @@ export default function StarterTool({ slug }: { slug: string }) {
   usePageTitle(`${tool.name} | Pontikus Boatyard`);
   useEffect(() => {
     if (!ref.current) return;
+    // Preview a level on this hub with ?preview=level1 (pontikus.com sets this from the member's plan).
+    const preview = new URLSearchParams(window.location.search).get("preview");
+    if (preview) {
+      ref.current.dataset.audience = tool.audience;
+      ref.current.dataset.level = preview;
+    }
     return widgets[slug](ref.current, {
       tool: (target) => asset("tools/" + target),
       verify: "https://pontikus.com/join-membership",

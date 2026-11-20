@@ -1,4 +1,4 @@
-import { tripAreas, tripAreasLevel1 } from "../web/lib/starter-tools";
+import { tripAreas, tripAreasFull, tripAreasLevel1, tripTips } from "../web/lib/starter-tools";
 import { readinessWheel } from "./readiness-wheel";
 
 export const mount = readinessWheel({
@@ -9,6 +9,13 @@ export const mount = readinessWheel({
   areas: tripAreas,
   level1Areas: [...tripAreas.map((a) => a.label), ...tripAreasLevel1],
   bands: { low: "Not ready yet", mid: "Nearly there", high: "Ready to go" },
+  level1: {
+    intro:
+      "Score all eight parts of your next trip to the coast. You get an overall readiness score, a tip for every area, weakest first, and you can save results to compare trips.",
+    areas: tripAreasFull,
+    tips: tripTips,
+    storageKey: "pkst-trip-readiness-wheel-l1",
+  },
   // Boat upkeep is covered by the live Boatcare Readiness Check, so the wheel leaves it out.
   extraNote: () =>
     'Taking your own boat? Run the <a class="pkst-link" href="https://pontikus.com/calculators/boatcare-readiness-check">Boatcare Readiness Check</a> for the engine, hull and safety gear. For the best month to go, try the <a class="pkst-link" href="https://pontikus.com/boatyard/coastal-season-planner">Coastal Season Planner</a>.',

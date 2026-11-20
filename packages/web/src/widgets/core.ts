@@ -2,7 +2,7 @@
 // Each tool is a plain-DOM widget: the React app mounts it on its own page, and
 // `bun run widgets` bundles each one into a single paste-ready snippet for the
 // pontikus.com Boatyard pages (Brilliant Directories), so both run the same code.
-import { ladderByType, levelLabel, levelOrder, type ToolType } from "../web/lib/levels";
+import { ladderByType, levelLabel, levelOrder, membershipNames, type LevelKey, type ToolType } from "../web/lib/levels";
 import { css } from "./styles";
 
 export type WidgetLinks = {
@@ -10,11 +10,14 @@ export type WidgetLinks = {
   tool: (slug: string) => string;
   // Where "Get verified" goes. Placeholder text until the real link is set.
   verify: string;
+  // Where a member changes plan to unlock a level.
+  upgrade?: string;
 };
 
 export const defaultLinks: WidgetLinks = {
   tool: (slug) => `/boatyard/${liveSlugs[slug] ?? slug}`,
   verify: "/join-membership",
+  upgrade: "/account/changelisting",
 };
 
 // Repo slugs → live pontikus.com slugs for the makers the Starter tools link to.
@@ -41,14 +44,27 @@ export function injectStyles(doc: Document = document) {
   styleInjected = true;
 }
 
-export function ladder(audience: string, type: ToolType) {
+export function ladder(
+  audience: string,
+  type: ToolType,
+  opts: { current?: LevelKey; built?: LevelKey[]; upgrade?: string } = {},
+) {
+  const current = opts.current ?? "starter";
+  const built = opts.built ?? ["starter"];
+  const at = levelOrder.indexOf(current);
   const rows = levelOrder
-    .map((level) => {
-      const current = level === "starter";
-      return `<li class="${current ? "is-current" : ""}">
+    .map((level, i) => {
+      const name = membershipNames[audience]?.[i - 1];
+      let tag = `<span class="pkst-tag">Coming soon</span>`;
+      if (level === current) tag = `<span class="pkst-tag">You are here</span>`;
+      else if (i < at) tag = `<span class="pkst-tag">Included</span>`;
+      else if (built.includes(level) && opts.upgrade)
+        tag = `<a class="pkst-tag pkst-upgrade" href="${esc(opts.upgrade)}">Upgrade to ${esc(name ?? "unlock")}</a>`;
+      else if (built.includes(level)) tag = `<span class="pkst-tag">Available</span>`;
+      return `<li class="${level === current ? "is-current" : ""}">
         <span class="pkst-level">${esc(levelLabel(audience, level))}</span>
         <span>${esc(ladderByType[type][level])}</span>
-        <span class="pkst-tag">${current ? "You are here" : "Coming soon"}</span>
+        ${tag}
       </li>`;
     })
     .join("");
@@ -56,6 +72,11 @@ export function ladder(audience: string, type: ToolType) {
     <h3>Grow this tool with your membership</h3>
     <ol>${rows}</ol>
   </section>`;
+}
+
+// Reads the member's plan that the pontikus.com page put on the mount point.
+export function memberPlan(root: HTMLElement) {
+  return { audience: root.dataset.audience, level: root.dataset.level, member: root.dataset.member === "1" };
 }
 
 export function verifyCta(links: WidgetLinks, text = "Get verified") {
@@ -83,7 +104,7 @@ export function wheelSvg(labels: string[], values: number[], highlight: number) 
     const mid = (a0 + a1) / 2;
     const [x, y] = point(rMax + 14, mid).split(" ").map(Number);
     const anchor = Math.abs(Math.sin(mid)) < 0.2 ? "middle" : Math.sin(mid) > 0 ? "start" : "end";
-    out += `<text x="${x}" y="${y + 4}" text-anchor="${anchor}">${esc(labels[i].split(" ")[0])}</text>`;
+    out += `<text x="${x}" y="${y + 4}" text-anchor="${anchor}">${esc(labels[i])}</text>`;
   }
   return `<svg class="pkst-wheel" viewBox="-60 -10 ${size + 120} ${size + 20}" role="img" aria-label="Readiness wheel">${out}</svg>`;
 }
@@ -94,9 +115,10 @@ export function shell(opts: {
   intro: string;
   form: string;
   result: string;
+  levelLabel?: string;
 }) {
   return `<div class="pkst">
-    <p class="pkst-eyebrow">${esc(opts.audienceName.toUpperCase())} · ${esc(opts.typeLabel.toUpperCase())} · STARTER</p>
+    <p class="pkst-eyebrow">${esc(opts.audienceName.toUpperCase())} · ${esc(opts.typeLabel.toUpperCase())} · ${esc((opts.levelLabel ?? "Starter").toUpperCase())}</p>
     <p class="pkst-intro">${esc(opts.intro)}</p>
     <div class="pkst-columns">
       <section class="pkst-form" aria-label="Your answers">${opts.form}</section>

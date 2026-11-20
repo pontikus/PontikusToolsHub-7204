@@ -18,7 +18,7 @@ if (is_array($pkstU) && !empty($pkstU['user_id'])) {
   </div>
 </div>
 <?php } ?>
-<script>(()=>{var f=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],T=[31,28,31,30,31,30,31,31,30,31,30,31],m=(e,a=Number.MAX_SAFE_INTEGER)=>Number.isFinite(e)?Math.min(a,Math.max(0,e)):0;function k(e){let a=Math.floor(m(e.rooms,1e4)),o=m(e.rate,1e6),n=m(e.target,100),c=f.map((r,i)=>{let t=m(e.occupancy[i]??0,100),s=Math.max(0,n-t),p=Math.round(a*T[i]*s/100);return{month:r,occupancy:t,gapPct:s,lostNights:p,lostRevenue:p*o}}),u=c.filter((r)=>r.gapPct>0),d=u.reduce((r,i)=>!r||i.lostRevenue>r.lostRevenue?i:r,null);return{rows:c,gapMonths:u.length,totalLostNights:c.reduce((r,i)=>r+i.lostNights,0),totalLostRevenue:c.reduce((r,i)=>r+i.lostRevenue,0),worst:d}}var x=["starter","level1","level2","level3"],B={"sea-lovers":["Drift","Swell","Break"],"coastal-experts":["Shore","Crest","Tidal"],"shoreline-businesses":["Harbour","Pier","Port"]};function y(e,a){if(a==="starter")return"Starter";let o=x.indexOf(a)-1,n=B[e]?.[o];return`Level ${o+1}${n?` · ${n}`:""}`}var b={Assessment:{starter:"Core score and your weakest area",level1:"Full question set, tailored tips, saved results",level2:"Visual chart, compare with a previous result, PDF export",level3:"Custom questions and targets, branded and embeddable"},Calculator:{starter:"One scenario, instant answer",level1:"Full inputs, saved scenarios, shareable summary",level2:"Side-by-side scenarios, charts, PDF export",level3:"Custom fields and defaults, branded output, embeddable"},Planner:{starter:"A single plan with the essentials",level1:"Editable plan, reminders, saved plans",level2:"Multiple plans, calendar export, printable PDF",level3:"Shared plans, branded output, embeddable"},Checker:{starter:"A short checklist",level1:"Full checklist tailored to your answers, saved",level2:"Scored result, history, PDF report",level3:"Custom checklist items, branded report, embeddable"},Generator:{starter:"One draft",level1:"Several variations, tone options, saved drafts",level2:"Longer formats, export to document, draft history",level3:"Your own templates and voice, branded export, embeddable"},Maker:{starter:"Make one item and download it",level1:"More templates, saved designs, size options",level2:"Every size and format, PDF and bundle export",level3:"Your own brand colours and logo, embeddable"},Tracker:{starter:"Track a small number of items",level1:"Unlimited items, date reminders, saved",level2:"Dashboard view, spreadsheet export, history",level3:"Custom fields, shared access, branded, embeddable"}};var v=`
+<script>(()=>{var B=[{key:"route",label:"Route and timing",question:"Do you know where you are going, how long it takes and when you need to be back?",fix:"Write down the route, the time you set off and the latest time you will turn back. Share it with someone who is not coming."},{key:"weather",label:"Weather and tides",question:"Have you checked the forecast, the tide times and how they change through the day?",fix:"Check the forecast and tide times the evening before and again on the morning. Pick a backup day if conditions look marginal."},{key:"kit",label:"Kit and clothing",question:"Is your kit packed, checked and right for the conditions?",fix:"Lay your kit out the night before and check it against the conditions. Pack one more warm layer than you think you need."},{key:"safety",label:"Safety and contacts",question:"Does someone know your plan, and can you call for help if you need to?",fix:"Tell someone your plan and your return time, carry a charged phone in a waterproof case, and know how to call the coastguard where you are."}];var z=[...B,{key:"fitness",label:"Fitness and skills",question:"Is the trip within what you and everyone coming can comfortably do?",fix:"Pick a shorter or easier version of the trip, or build up to it with one practice outing first."},{key:"food",label:"Food and water",question:"Have you packed enough to eat and drink for the whole trip, plus some spare?",fix:"Pack water for the full time out and a bit more, plus food you can eat with cold or wet hands."},{key:"travel",label:"Getting there",short:"Travel",question:"Do you know how you get there and back, including parking, transport times and access?",fix:"Check the last bus, ferry or train back, where you can park, and whether the access path is open."},{key:"planb",label:"Plan B",short:"Plan B",question:"If something changes on the day, do you know what you will do instead?",fix:"Choose a shorter fallback route or a different spot nearby, and agree the point at which you switch to it."}];var k=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],I=[31,28,31,30,31,30,31,31,30,31,30,31],h=(e,s=Number.MAX_SAFE_INTEGER)=>Number.isFinite(e)?Math.min(s,Math.max(0,e)):0;function y(e){let s=Math.floor(h(e.rooms,1e4)),a=h(e.rate,1e6),l=h(e.target,100),d=k.map((r,n)=>{let t=h(e.occupancy[n]??0,100),o=Math.max(0,l-t),p=Math.round(s*I[n]*o/100);return{month:r,occupancy:t,gapPct:o,lostNights:p,lostRevenue:p*a}}),c=d.filter((r)=>r.gapPct>0),u=c.reduce((r,n)=>!r||n.lostRevenue>r.lostRevenue?n:r,null);return{rows:d,gapMonths:c.length,totalLostNights:d.reduce((r,n)=>r+n.lostNights,0),totalLostRevenue:d.reduce((r,n)=>r+n.lostRevenue,0),worst:u}}var g=["starter","level1","level2","level3"],x={"sea-lovers":["Drift","Swell","Break"],"coastal-experts":["Shore","Crest","Tidal"],"shoreline-businesses":["Harbour","Pier","Port"]};function b(e,s){if(s==="starter")return"Starter";let a=g.indexOf(s)-1,l=x[e]?.[a];return`Level ${a+1}${l?` · ${l}`:""}`}var w={Assessment:{starter:"Core score and your weakest area",level1:"Full question set, tailored tips, saved results",level2:"Visual chart, compare with a previous result, PDF export",level3:"Custom questions and targets, branded and embeddable"},Calculator:{starter:"One scenario, instant answer",level1:"Full inputs, saved scenarios, shareable summary",level2:"Side-by-side scenarios, charts, PDF export",level3:"Custom fields and defaults, branded output, embeddable"},Planner:{starter:"A single plan with the essentials",level1:"Editable plan, reminders, saved plans",level2:"Multiple plans, calendar export, printable PDF",level3:"Shared plans, branded output, embeddable"},Checker:{starter:"A short checklist",level1:"Full checklist tailored to your answers, saved",level2:"Scored result, history, PDF report",level3:"Custom checklist items, branded report, embeddable"},Generator:{starter:"One draft",level1:"Several variations, tone options, saved drafts",level2:"Longer formats, export to document, draft history",level3:"Your own templates and voice, branded export, embeddable"},Maker:{starter:"Make one item and download it",level1:"More templates, saved designs, size options",level2:"Every size and format, PDF and bundle export",level3:"Your own brand colours and logo, embeddable"},Tracker:{starter:"Track a small number of items",level1:"Unlimited items, date reminders, saved",level2:"Dashboard view, spreadsheet export, history",level3:"Custom fields, shared access, branded, embeddable"}};var v=`
 @import url("https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=Fraunces:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap");
 .pkst{--n:#0b1f3b;--g:#c6a04a;--c:#f7f3eb;--p:#fffdf8;--m:#586474;--l:#ddd9ce;--weak:#b5532f;
   font-family:Archivo,system-ui,sans-serif;color:var(--n);background:var(--c);padding:28px;border:1px solid var(--l);border-radius:3px;box-sizing:border-box;max-width:1180px;margin:0 auto;line-height:1.6}
@@ -92,6 +92,17 @@ if (is_array($pkstU) && !empty($pkstU['user_id'])) {
 .pkst-note{font-size:13px;color:var(--m);margin-top:14px !important}
 .pkst-gate h3{font-size:26px;margin-top:6px}
 .pkst-gate-actions{display:flex;flex-wrap:wrap;gap:12px}
+.pkst-upgrade{color:#0b4f8a !important;text-decoration:underline;font-weight:600}
+.pkst-tips{list-style:none;padding:0;margin:14px 0 0}
+.pkst-tips li{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;padding:10px 0;border-top:1px solid #eee8db;font-size:14px}
+.pkst-tips b{font-weight:600}
+.pkst-tips span{font:12px "IBM Plex Mono",monospace;color:var(--m);grid-row:span 2;padding-top:2px;min-width:38px}
+.pkst-tips li.is-weak span{color:var(--weak)}
+.pkst-saved{margin-top:18px;border-top:1px solid var(--l);padding-top:14px}
+.pkst-saved ul{list-style:none;padding:0;margin:10px 0 0}
+.pkst-saved li{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #eee8db}
+.pkst-saved li>span{font-family:"IBM Plex Mono",monospace;font-size:12px}
+.pkst-small{min-height:36px;padding:6px 12px;border:1px solid #bfc2b7;border-radius:3px;background:var(--c);color:var(--n);font:inherit;font-size:12px;cursor:pointer}
 .pkst-privacy{font-size:12px;color:var(--m);margin-top:18px !important}
 @media (max-width:860px){
   .pkst{padding:18px 16px}
@@ -101,48 +112,48 @@ if (is_array($pkstU) && !empty($pkstU['user_id'])) {
   .pkst-ladder li>span:nth-child(2){grid-column:1/-1;grid-row:2}
 }
 @media (max-width:420px){.pkst-months{grid-template-columns:repeat(2,minmax(0,1fr))}.pkst-row2{grid-template-columns:1fr}}
-`;var M={tool:(e)=>`/boatyard/${I[e]??e}`,verify:"/join-membership"},I={"rate-card":"rate-card-builder","credential-card":"credential-card-maker",availability:"availability-poster-maker","media-kit":"media-kit-builder"},l=(e)=>String(e).replace(/[&<>"']/g,(a)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[a]),w=!1;function g(e=document){if(w||e.getElementById("pkst-styles"))return;let a=e.createElement("style");a.id="pkst-styles",a.textContent=v,e.head.appendChild(a),w=!0}function S(e,a){return`<section class="pkst-ladder" aria-label="What each level adds">
+`;var S={tool:(e)=>`/boatyard/${R[e]??e}`,verify:"/join-membership",upgrade:"/account/changelisting"},R={"rate-card":"rate-card-builder","credential-card":"credential-card-maker",availability:"availability-poster-maker","media-kit":"media-kit-builder"},i=(e)=>String(e).replace(/[&<>"']/g,(s)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[s]),M=!1;function m(e=document){if(M||e.getElementById("pkst-styles"))return;let s=e.createElement("style");s.id="pkst-styles",s.textContent=v,e.head.appendChild(s),M=!0}function L(e,s,a={}){let l=a.current??"starter",d=a.built??["starter"],c=g.indexOf(l);return`<section class="pkst-ladder" aria-label="What each level adds">
     <h3>Grow this tool with your membership</h3>
-    <ol>${x.map((n)=>{let c=n==="starter";return`<li class="${c?"is-current":""}">
-        <span class="pkst-level">${l(y(e,n))}</span>
-        <span>${l(b[a][n])}</span>
-        <span class="pkst-tag">${c?"You are here":"Coming soon"}</span>
+    <ol>${g.map((r,n)=>{let t=x[e]?.[n-1],o='<span class="pkst-tag">Coming soon</span>';if(r===l)o='<span class="pkst-tag">You are here</span>';else if(n<c)o='<span class="pkst-tag">Included</span>';else if(d.includes(r)&&a.upgrade)o=`<a class="pkst-tag pkst-upgrade" href="${i(a.upgrade)}">Upgrade to ${i(t??"unlock")}</a>`;else if(d.includes(r))o='<span class="pkst-tag">Available</span>';return`<li class="${r===l?"is-current":""}">
+        <span class="pkst-level">${i(b(e,r))}</span>
+        <span>${i(w[s][r])}</span>
+        ${o}
       </li>`}).join("")}</ol>
-  </section>`}function L(e,a="Get verified"){return`<a class="pkst-button pkst-gold" href="${l(e.verify)}">${l(a)}</a>`}function P(e){return`<div class="pkst">
-    <p class="pkst-eyebrow">${l(e.audienceName.toUpperCase())} · ${l(e.typeLabel.toUpperCase())} · STARTER</p>
-    <p class="pkst-intro">${l(e.intro)}</p>
+  </section>`}function P(e,s="Get verified"){return`<a class="pkst-button pkst-gold" href="${i(e.verify)}">${i(s)}</a>`}function A(e){return`<div class="pkst">
+    <p class="pkst-eyebrow">${i(e.audienceName.toUpperCase())} · ${i(e.typeLabel.toUpperCase())} · ${i((e.levelLabel??"Starter").toUpperCase())}</p>
+    <p class="pkst-intro">${i(e.intro)}</p>
     <div class="pkst-columns">
       <section class="pkst-form" aria-label="Your answers">${e.form}</section>
       <section class="pkst-result" aria-live="polite" aria-label="Your result"></section>
     </div>
     <div class="pkst-after"></div>
     <p class="pkst-privacy">Your answers stay in this browser. Nothing is uploaded or saved to a server.</p>
-  </div>`}var R=[35,40,50,60,70,85,95,95,75,55,40,45];function A(e,a=M){g(e.ownerDocument);let o={rooms:8,rate:120,target:70,currency:"£",occupancy:[...R]},n=(t,s,p,C)=>`<label class="pkst-field"><span class="pkst-label">${l(s)}</span><input type="number" inputmode="decimal" data-k="${t}" value="${p}" ${C}></label>`,c=`
+  </div>`}var q=[35,40,50,60,70,85,95,95,75,55,40,45];function C(e,s=S){m(e.ownerDocument);let a={rooms:8,rate:120,target:70,currency:"£",occupancy:[...q]},l=(t,o,p,T)=>`<label class="pkst-field"><span class="pkst-label">${i(o)}</span><input type="number" inputmode="decimal" data-k="${t}" value="${p}" ${T}></label>`,d=`
     <div class="pkst-row2">
-      ${n("rooms","Rooms or units",o.rooms,'min="1" max="10000" step="1"')}
+      ${l("rooms","Rooms or units",a.rooms,'min="1" max="10000" step="1"')}
       <label class="pkst-field"><span class="pkst-label">Currency</span>
-        <select data-k="currency">${["£","€","$"].map((t)=>`<option${t===o.currency?" selected":""}>${t}</option>`).join("")}</select></label>
+        <select data-k="currency">${["£","€","$"].map((t)=>`<option${t===a.currency?" selected":""}>${t}</option>`).join("")}</select></label>
     </div>
     <div class="pkst-row2">
-      ${n("rate","Average nightly rate",o.rate,'min="0" step="1"')}
-      ${n("target","Target occupancy (%)",o.target,'min="0" max="100" step="1"')}
+      ${l("rate","Average nightly rate",a.rate,'min="0" step="1"')}
+      ${l("target","Target occupancy (%)",a.target,'min="0" max="100" step="1"')}
     </div>
     <fieldset class="pkst-field"><legend class="pkst-label">Occupancy by month (%)</legend>
       <span class="pkst-hint">Example figures are filled in. Replace them with your own.</span>
-      <div class="pkst-months">${f.map((t,s)=>`<label>${t}<input type="number" inputmode="decimal" min="0" max="100" step="1" data-m="${s}" value="${o.occupancy[s]}" aria-label="${t} occupancy percent"></label>`).join("")}</div>
-    </fieldset>`;e.innerHTML=P({audienceName:"Shoreline Businesses",typeLabel:"Calculator",intro:"Find the months where empty rooms cost you most, and how many extra nights would close each gap.",form:c,result:""});let u=e.querySelector(".pkst-result");e.querySelector(".pkst-after").innerHTML=S("shoreline-businesses","Calculator")+`<div>${L(a)}</div>`;let d=(t)=>o.currency+Math.round(t).toLocaleString("en-GB"),r=()=>{let t=k(o),s=t.rows.map((p)=>`<li class="${t.worst&&p.month===t.worst.month?"is-worst":""}">
+      <div class="pkst-months">${k.map((t,o)=>`<label>${t}<input type="number" inputmode="decimal" min="0" max="100" step="1" data-m="${o}" value="${a.occupancy[o]}" aria-label="${t} occupancy percent"></label>`).join("")}</div>
+    </fieldset>`;e.innerHTML=A({audienceName:"Shoreline Businesses",typeLabel:"Calculator",intro:"Find the months where empty rooms cost you most, and how many extra nights would close each gap.",form:d,result:""});let c=e.querySelector(".pkst-result");e.querySelector(".pkst-after").innerHTML=L("shoreline-businesses","Calculator")+`<div>${P(s)}</div>`;let u=(t)=>a.currency+Math.round(t).toLocaleString("en-GB"),r=()=>{let t=y(a),o=t.rows.map((p)=>`<li class="${t.worst&&p.month===t.worst.month?"is-worst":""}">
           <span>${p.month}</span>
-          <span class="pkst-bar" aria-hidden="true"><i style="width:${p.occupancy}%"></i><b style="left:${Math.min(100,o.target)}%"></b></span>
-          <span>${p.lostRevenue>0?d(p.lostRevenue):"on target"}</span>
-        </li>`).join("");u.innerHTML=t.gapMonths===0?`<p class="pkst-eyebrow">YOUR GAPS</p><h3>Every month meets your ${l(o.target)}% target.</h3>
-         <ul class="pkst-bars" aria-label="Occupancy by month">${s}</ul>`:`<p class="pkst-eyebrow">REVENUE BELOW TARGET, PER YEAR</p>
-        <div class="pkst-score"><strong>${d(t.totalLostRevenue)}</strong></div>
-        <p>${t.gapMonths} month${t.gapMonths===1?"":"s"} below your ${l(o.target)}% target, ${t.totalLostNights.toLocaleString("en-GB")} room nights in all.</p>
+          <span class="pkst-bar" aria-hidden="true"><i style="width:${p.occupancy}%"></i><b style="left:${Math.min(100,a.target)}%"></b></span>
+          <span>${p.lostRevenue>0?u(p.lostRevenue):"on target"}</span>
+        </li>`).join("");c.innerHTML=t.gapMonths===0?`<p class="pkst-eyebrow">YOUR GAPS</p><h3>Every month meets your ${i(a.target)}% target.</h3>
+         <ul class="pkst-bars" aria-label="Occupancy by month">${o}</ul>`:`<p class="pkst-eyebrow">REVENUE BELOW TARGET, PER YEAR</p>
+        <div class="pkst-score"><strong>${u(t.totalLostRevenue)}</strong></div>
+        <p>${t.gapMonths} month${t.gapMonths===1?"":"s"} below your ${i(a.target)}% target, ${t.totalLostNights.toLocaleString("en-GB")} room nights in all.</p>
         <div class="pkst-fix">
           <p class="pkst-eyebrow">BIGGEST GAP</p>
-          <h4>${t.worst.month}: ${d(t.worst.lostRevenue)}</h4>
+          <h4>${t.worst.month}: ${u(t.worst.lostRevenue)}</h4>
           <p>Fill ${t.worst.lostNights.toLocaleString("en-GB")} more room nights in ${t.worst.month} to reach your target.</p>
         </div>
-        <ul class="pkst-bars" aria-label="Occupancy by month against your target">${s}</ul>
-        <p class="pkst-legend">Bar: your occupancy · gold line: your target. Based on a 365-day year.</p>`},i=(t)=>{let s=t.target;if(s.dataset.m!==void 0)o.occupancy[Number(s.dataset.m)]=Number(s.value)||0;else if(s.dataset.k==="currency")o.currency=s.value;else if(s.dataset.k)o[s.dataset.k]=Number(s.value)||0;r()};return e.addEventListener("input",i),r(),()=>e.removeEventListener("input",i)}var h=document.getElementById("pkst-occupancy-gap-finder");if(h&&!h.dataset.ready)h.dataset.ready="1",A(h);else if(document.querySelector(".pkst-gate"))g();})();
+        <ul class="pkst-bars" aria-label="Occupancy by month against your target">${o}</ul>
+        <p class="pkst-legend">Bar: your occupancy · gold line: your target. Based on a 365-day year.</p>`},n=(t)=>{let o=t.target;if(o.dataset.m!==void 0)a.occupancy[Number(o.dataset.m)]=Number(o.value)||0;else if(o.dataset.k==="currency")a.currency=o.value;else if(o.dataset.k)a[o.dataset.k]=Number(o.value)||0;r()};return e.addEventListener("input",n),r(),()=>e.removeEventListener("input",n)}var f=document.getElementById("pkst-occupancy-gap-finder");if(f&&!f.dataset.ready)f.dataset.ready="1",C(f);else if(document.querySelector(".pkst-gate"))m();})();
 </script>
