@@ -1,0 +1,73 @@
+// Access levels for the levelled tools. Starter is open to everyone (website registration
+// will gate it once the profile integration exists). Levels 1–3 follow the Pontikus
+// membership names for each audience, the same names the calculator access codes use.
+export type LevelKey = "starter" | "level1" | "level2" | "level3";
+export type ToolType =
+  | "Assessment"
+  | "Calculator"
+  | "Planner"
+  | "Checker"
+  | "Generator"
+  | "Maker"
+  | "Tracker";
+
+export const levelOrder: LevelKey[] = ["starter", "level1", "level2", "level3"];
+
+export const membershipNames: Record<string, [string, string, string]> = {
+  "sea-lovers": ["Drift", "Swell", "Break"],
+  "coastal-experts": ["Shore", "Crest", "Tidal"],
+  "shoreline-businesses": ["Harbour", "Pier", "Port"],
+};
+
+export function levelLabel(audience: string, level: LevelKey) {
+  if (level === "starter") return "Starter";
+  const index = levelOrder.indexOf(level) - 1;
+  const name = membershipNames[audience]?.[index];
+  return `Level ${index + 1}${name ? ` · ${name}` : ""}`;
+}
+
+// What each level adds, by tool type (from the levelled tools brief).
+export const ladderByType: Record<ToolType, Record<LevelKey, string>> = {
+  Assessment: {
+    starter: "Core score and your weakest area",
+    level1: "Full question set, tailored tips, saved results",
+    level2: "Visual chart, compare with a previous result, PDF export",
+    level3: "Custom questions and targets, branded and embeddable",
+  },
+  Calculator: {
+    starter: "One scenario, instant answer",
+    level1: "Full inputs, saved scenarios, shareable summary",
+    level2: "Side-by-side scenarios, charts, PDF export",
+    level3: "Custom fields and defaults, branded output, embeddable",
+  },
+  Planner: {
+    starter: "A single plan with the essentials",
+    level1: "Editable plan, reminders, saved plans",
+    level2: "Multiple plans, calendar export, printable PDF",
+    level3: "Shared plans, branded output, embeddable",
+  },
+  Checker: {
+    starter: "A short checklist",
+    level1: "Full checklist tailored to your answers, saved",
+    level2: "Scored result, history, PDF report",
+    level3: "Custom checklist items, branded report, embeddable",
+  },
+  Generator: {
+    starter: "One draft",
+    level1: "Several variations, tone options, saved drafts",
+    level2: "Longer formats, export to document, draft history",
+    level3: "Your own templates and voice, branded export, embeddable",
+  },
+  Maker: {
+    starter: "Make one item and download it",
+    level1: "More templates, saved designs, size options",
+    level2: "Every size and format, PDF and bundle export",
+    level3: "Your own brand colours and logo, embeddable",
+  },
+  Tracker: {
+    starter: "Track a small number of items",
+    level1: "Unlimited items, date reminders, saved",
+    level2: "Dashboard view, spreadsheet export, history",
+    level3: "Custom fields, shared access, branded, embeddable",
+  },
+};

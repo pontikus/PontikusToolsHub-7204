@@ -108,3 +108,9 @@ Social story text, including its optional Pontikus frame, stays inside the 250�
 - Typecheck, lint and `VITE_BASE=/test/ bun run build` pass. Build reports a non-blocking large-chunk warning. All protected hashes and the workflow/Vite/asset helper hashes remain unchanged.
 - All six `/test/` routes and their back links work. Root-path asset check cannot fully pass: the required protected analytics injection still requests `/runable.js` and returns 404 under the sub-path. Tool images and bundled assets use `/test/` correctly. This needs a platform-level fix, not a protected-file edit.
 - No GitHub push or public deployment was performed. Publish-button state and published embedding permissions remain unverified.
+## Levelled tools (Starter)
+- Five Starter tools are live in the hub as tools 15–19: Trip Readiness Wheel, Sea Swim Kit Checker, Profile Strength Checker, Occupancy Gap Finder and Season Readiness Wheel.
+- Each one is a plain-DOM widget in `packages/web/src/widgets/`; rules and wording sit in `lib/starter-tools.ts`, level names and the level ladder in `lib/levels.ts`. `pages/starter-tool.tsx` mounts a widget on its `/tools/<slug>` page.
+- `bun run widgets` (in `packages/web`) bundles each widget into a paste-ready snippet in `boatyard-snippets/` for the pontikus.com pages. See `boatyard-snippets/README.md`.
+- Levels 1–3 are shown as "Coming soon" on each tool. Starter is meant to need website registration; that check is not wired in, so Starter is open for now.
+- Unit tests: `bun test src/web/lib/starter-tools.test.ts`.
