@@ -27,6 +27,19 @@ import {
   Gauge,
   BedDouble,
   Sun,
+  Aperture,
+  Backpack,
+  Caravan,
+  MapPin,
+  NotebookPen,
+  Recycle,
+  RotateCcw,
+  Ruler,
+  Sunset,
+  Thermometer,
+  Trash2,
+  Wallet,
+  Waves,
 } from "lucide-react";
 import { Header, Footer, PlaceholderLink } from "../components/brand";
 import { tools } from "../lib/catalogue";
@@ -52,6 +65,19 @@ const icons = [
   Gauge,
   BedDouble,
   Sun,
+  Waves,
+  Ruler,
+  Thermometer,
+  RotateCcw,
+  Backpack,
+  Sunset,
+  Aperture,
+  NotebookPen,
+  MapPin,
+  Wallet,
+  Caravan,
+  Trash2,
+  Recycle,
 ];
 const groups = [
   {

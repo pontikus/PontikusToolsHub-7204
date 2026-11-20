@@ -26,6 +26,7 @@ const liveSlugs: Record<string, string> = {
   "credential-card": "credential-card-maker",
   "availability": "availability-poster-maker",
   "media-kit": "media-kit-builder",
+  journal: "trip-journal",
 };
 
 export const esc = (value: unknown) =>
