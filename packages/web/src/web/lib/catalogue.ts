@@ -1,4 +1,5 @@
 // Edit names, promises and statuses here. The hub reads this one catalogue.
+import type { ToolType } from "./levels";
 export type ToolStatus = "Live" | "In build" | "Planned";
 export const audiences: Record<string, string> = {
   "sea-lovers": "Sea Lovers",
@@ -12,6 +13,9 @@ export const tools: {
   promise: string;
   status: ToolStatus;
   audience: string;
+  // Levelled tools only: their type and the level built so far.
+  toolType?: ToolType;
+  level?: "Starter";
 }[] = [
   {
     number: 1,
@@ -124,6 +128,57 @@ export const tools: {
     promise: "Three matching sizes. One unmistakable business.",
     status: "Live",
     audience: "shoreline-businesses",
+  },
+  // Levelled tools: Starter versions. Levels 1–3 follow the membership tiers.
+  {
+    number: 15,
+    name: "Trip Readiness Wheel",
+    slug: "trip-readiness-wheel",
+    promise: "Find the weak spot in your trip before the sea does.",
+    status: "Live",
+    audience: "sea-lovers",
+    toolType: "Assessment",
+    level: "Starter",
+  },
+  {
+    number: 16,
+    name: "Sea Swim Kit Checker",
+    slug: "sea-swim-kit-checker",
+    promise: "Everything for your next swim, ticked off before you go.",
+    status: "Live",
+    audience: "sea-lovers",
+    toolType: "Checker",
+    level: "Starter",
+  },
+  {
+    number: 17,
+    name: "Profile Strength Checker",
+    slug: "profile-strength-checker",
+    promise: "Five questions, a score and the three fixes that matter most.",
+    status: "Live",
+    audience: "coastal-experts",
+    toolType: "Assessment",
+    level: "Starter",
+  },
+  {
+    number: 18,
+    name: "Occupancy Gap Finder",
+    slug: "occupancy-gap-finder",
+    promise: "See what empty rooms cost you, month by month.",
+    status: "Live",
+    audience: "shoreline-businesses",
+    toolType: "Calculator",
+    level: "Starter",
+  },
+  {
+    number: 19,
+    name: "Season Readiness Wheel",
+    slug: "season-readiness-wheel",
+    promise: "Know which part of the business to fix before the season turns.",
+    status: "Live",
+    audience: "shoreline-businesses",
+    toolType: "Assessment",
+    level: "Starter",
   },
 ];
 

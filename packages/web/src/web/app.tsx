@@ -11,6 +11,8 @@ import CredentialCard from "./pages/credential-card";
 import Availability from "./pages/availability";
 import BusinessMaker from "./pages/business-maker";
 import PlannedTool from "./pages/planned-tool";
+import StarterTool from "./pages/starter-tool";
+import { widgets } from "../widgets";
 import { Provider } from "./components/provider";
 import { AgentFeedback, RunableBadge } from "@runablehq/website-runtime";
 
@@ -34,6 +36,11 @@ function App() {
           <Route path="/tools/job-post">{() => <BusinessMaker key="job-post" kind="job-post" />}</Route>
           <Route path="/tools/notice">{() => <BusinessMaker key="notice" kind="notice" />}</Route>
           <Route path="/tools/social-kit">{() => <BusinessMaker key="social-kit" kind="social-kit" />}</Route>
+          {Object.keys(widgets).map((slug) => (
+            <Route key={slug} path={`/tools/${slug}`}>
+              {() => <StarterTool key={slug} slug={slug} />}
+            </Route>
+          ))}
           <Route path="/tools/:slug" component={PlannedTool} />
           <Route component={PlannedTool} />
         </Switch>

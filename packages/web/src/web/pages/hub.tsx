@@ -22,6 +22,11 @@ import {
   Globe2,
   SlidersHorizontal,
   PenLine,
+  Compass,
+  ListChecks,
+  Gauge,
+  BedDouble,
+  Sun,
 } from "lucide-react";
 import { Header, Footer, PlaceholderLink } from "../components/brand";
 import { tools } from "../lib/catalogue";
@@ -42,6 +47,11 @@ const icons = [
   BriefcaseBusiness,
   ClipboardList,
   Layers,
+  Compass,
+  ListChecks,
+  Gauge,
+  BedDouble,
+  Sun,
 ];
 const groups = [
   {
@@ -190,6 +200,7 @@ export default function Hub() {
                         </div>
                         <span className="tool-number mono">
                           TOOL {String(tool.number).padStart(2, "0")}
+                          {tool.toolType ? ` · ${tool.toolType.toUpperCase()} · ${tool.level?.toUpperCase()}` : ""}
                         </span>
                         <h3>{tool.name}</h3>
                         <p>{tool.promise}</p>

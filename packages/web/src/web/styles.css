@@ -1700,3 +1700,8 @@ dialog.modal::backdrop {
     display: none;
   }
 }
+
+/* Levelled Starter tools: the widget brings its own scoped styles (.pkst). */
+.starter-page h1 {
+  margin-bottom: 18px;
+}
