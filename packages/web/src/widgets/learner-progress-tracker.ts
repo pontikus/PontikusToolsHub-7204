@@ -1,18 +1,21 @@
 import { learnerProgress } from "../web/lib/coastal-experts-tools";
 import { STARTER_TRACKER_LIMIT } from "../web/lib/sea-lovers-tools";
 import { defaultLinks, esc, type WidgetLinks } from "./core";
-import { loadList, saveList, starterShell } from "./kit";
+import { atLeast, loadList, saveList, starterShell, toolLevel } from "./kit";
 
 type Saved = { skills: string[]; learners: { name: string; done: string[] }[] };
 const KEY = "pkst-learner-progress";
-const SKILLS = 8;
-
 export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
+  // Level 1: no learner limit and up to 12 skills. Level 2: skill coverage and a spreadsheet.
+  const level = toolLevel(root, "coastal-experts");
+  const l2 = atLeast(level, "level2");
+  const SKILLS = atLeast(level, "level1") ? 12 : 8;
+  const LIMIT = atLeast(level, "level1") ? Infinity : STARTER_TRACKER_LIMIT;
   const loaded = loadList<Saved>(KEY)[0];
   const data: Saved = loaded ?? { skills: ["Knots", "Capsize drill", "Navigation", "Radio", "Man overboard", "", "", ""], learners: [] };
   while (data.skills.length < SKILLS) data.skills.push("");
   let note = "";
-  const { form, result } = starterShell(root, links, {
+  const { form, result, levels } = starterShell(root, links, {
     audience: "coastal-experts",
     audienceName: "Coastal Experts",
     type: "Tracker",
@@ -28,6 +31,14 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       <label class="pkst-field"><span class="pkst-label">Add a learner</span><input type="text" maxlength="40" data-new placeholder="Name"></label>
       <button type="button" class="pkst-button" data-add>Add learner</button>`;
   };
+  // Level 2 dashboard: how many learners have each skill.
+  const coverage = (list: string[]) =>
+    `<p class="pkst-eyebrow" style="margin-top:18px">SKILL COVERAGE</p><ul class="pkst-bars" aria-label="Learners with each skill">${list
+      .map((sk) => {
+        const n = data.learners.filter((l) => l.done.includes(sk)).length;
+        return `<li><span>${esc(sk)}</span><span class="pkst-bar" aria-hidden="true"><i style="width:${Math.round((n / Math.max(1, data.learners.length)) * 100)}%"></i></span><span>${n}</span></li>`;
+      })
+      .join("")}</ul>`;
   const render = () => {
     const list = skills();
     const r = learnerProgress(list, data.learners);
@@ -44,8 +55,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       ? `<p class="pkst-eyebrow">NEEDS MOST HELP</p>
         <h3>${esc(behind.name)}</h3><p>${behind.pct}% of skills done${behind.next ? `. Next: ${esc(behind.next)}.` : "."}</p>
         ${r.weakest && r.weakest.count < data.learners.length ? `<div class="pkst-fix"><p class="pkst-eyebrow">LEAST COVERED SKILL</p><p>${esc(r.weakest.skill)}: ${r.weakest.count} of ${data.learners.length} learners. Plan it into your next session.</p></div>` : ""}
-        <p class="pkst-eyebrow" style="margin-top:18px">TICK OFF SKILLS · ${data.learners.length} OF ${STARTER_TRACKER_LIMIT} LEARNERS</p>
+        <p class="pkst-eyebrow" style="margin-top:18px">TICK OFF SKILLS · ${data.learners.length}${LIMIT === Infinity ? "" : ` OF ${LIMIT}`} LEARNERS</p>
         <ul class="pkst-learners">${grid}</ul>
+        ${l2 ? coverage(list) : ""}
         ${note ? `<p class="pkst-note" role="status">${esc(note)}</p>` : ""}`
       : `<p class="pkst-eyebrow">YOUR LEARNERS</p><h3>Add your first learner.</h3><p>Then tick off skills as they reach them.</p>${note ? `<p class="pkst-note" role="status">${esc(note)}</p>` : ""}`;
   };
@@ -66,7 +78,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       const input = form.querySelector<HTMLInputElement>("input[data-new]")!;
       const name = input.value.trim();
       if (!name) note = "Type a name first.";
-      else if (data.learners.length >= STARTER_TRACKER_LIMIT) note = `Starter keeps ${STARTER_TRACKER_LIMIT} learners. Remove one to add another.`;
+      else if (data.learners.length >= LIMIT) note = `Starter keeps ${STARTER_TRACKER_LIMIT} learners. Remove one to add another.`;
       else {
         data.learners.push({ name, done: [] });
         input.value = "";
@@ -87,8 +99,21 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   root.addEventListener("click", onClick);
   drawForm();
   render();
+  const lv = levels(data as unknown as Record<string, unknown>, render, {
+    noVersions: true,
+    summary: () => {
+      const list = skills();
+      return `Learners: ${data.learners.length}\n${data.learners.map((l) => `${l.name}: ${list.filter((x) => l.done.includes(x)).length} of ${list.length} skills`).join("\n")}`;
+    },
+    metrics: undefined,
+    csv: () => {
+      const list = skills();
+      return [["Learner", ...list], ...data.learners.map((l) => [l.name, ...list.map((x) => (l.done.includes(x) ? "Yes" : ""))])];
+    },
+  });
   return () => {
     root.removeEventListener("input", onInput);
     root.removeEventListener("click", onClick);
+    lv.destroy();
   };
 }

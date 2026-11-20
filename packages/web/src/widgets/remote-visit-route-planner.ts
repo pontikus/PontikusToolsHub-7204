@@ -30,7 +30,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       )
       .join("") +
     field("number", "returnMin", "Travel back to base (min)", state.returnMin, { attrs: { min: 0, max: 600, step: 5 } });
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "coastal-experts",
     audienceName: "Coastal Experts",
     type: "Planner",
@@ -51,5 +51,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

@@ -18,6 +18,15 @@ export const mount = kitChecker<S>({
   rules: [
     {
       items: [
+        item("l1-brief", "Before you go", "Client brief and any previous reports read, with questions listed", "level1"),
+        item("l1-drawings", "Before you go", "Drawings or a site plan to mark up on the day", "level1"),
+        item("l1-hazards", "On site", "Hazards noted: edges, slippery surfaces, overhead lines, soft ground", "level1"),
+        item("l1-measure", "Record", "Key measurements taken twice, with what you measured from", "level1"),
+        item("l1-followups", "Afterwards", "Follow-up questions sent to the client within two days", "level1"),
+      ],
+    },
+    {
+      items: [
         item("tide", "Before you go", "Tide times and the safe working window checked"),
         item("access", "Before you go", "Access agreed with the owner, and the contact's number"),
         item("ppe", "Before you go", "PPE packed: boots, hi-vis, hard hat, gloves"),

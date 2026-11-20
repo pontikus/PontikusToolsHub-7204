@@ -13,7 +13,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     row2(field("text", "jurisdiction", "Jurisdiction", state.jurisdiction, { attrs: { maxlength: 40 } }), field("text", "deadline", "Key date or deadline", state.deadline, { attrs: { maxlength: 40 } })) +
     field("text", "otherParties", "Other parties", state.otherParties, { attrs: { maxlength: 100 } }) +
     checkList("documents", "Documents the client has sent", intakeDocuments.map((d) => [d, d]), state.documents);
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "coastal-experts",
     audienceName: "Coastal Experts",
     type: "Generator",
@@ -27,5 +27,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

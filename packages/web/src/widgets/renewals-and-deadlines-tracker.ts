@@ -18,6 +18,8 @@ export const mount = tracker<Deadline>({
     field("text", "item", "What needs renewing or filing", d.item, { attrs: { maxlength: 60, placeholder: "Professional indemnity insurance" } }) +
     field("text", "forWhom", "For", d.forWhom, { hint: "Me, or the client's name.", attrs: { maxlength: 40 } }) +
     row2(field("date", "date", "Due date", d.date), selectField("leadDays", "Start this far ahead", [["7", "1 week"], ["14", "2 weeks"], ["30", "1 month"], ["60", "2 months"], ["90", "3 months"]], String(d.leadDays))),
+  // Reminders land on the due date and go off when you said to start.
+  events: (entries) => entries.map((e) => ({ date: e.date, title: `Due: ${e.item} (${e.forWhom})`, remindDays: e.leadDays })),
   toEntry: (d) => (d.date && String(d.item).trim() ? { date: String(d.date), item: String(d.item).trim(), forWhom: String(d.forWhom).trim() || "Me", leadDays: num(d.leadDays, 0, 365) } : null),
   row: (e) => `${esc(e.item)} · ${esc(e.forWhom)}`,
   summary: (entries) => {

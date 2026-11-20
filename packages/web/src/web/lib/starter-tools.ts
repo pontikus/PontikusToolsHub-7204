@@ -317,9 +317,20 @@ export const profileItems: ProfileItem[] = [
   },
 ];
 
-export function profileStrength(answers: Record<string, boolean>) {
-  const done = profileItems.filter((item) => answers[item.key]).length;
-  const score = Math.round((done / profileItems.length) * 100);
-  const fixes = profileItems.filter((item) => !answers[item.key]).slice(0, 3);
+// Level 1 adds five more checks to the core five.
+export const profileItemsLevel1: ProfileItem[] = [
+  ...profileItems,
+  { key: "headline", label: "Headline", question: "Does the first line say what you do and where, in under fifteen words?", fix: "Write one line: what you do, for whom, and the stretch of coast you cover." },
+  { key: "prices", label: "Prices", question: "Does it give a starting price or a day rate, or say how you price?", fix: "Add a starting price or explain how you quote, so people know what to expect." },
+  { key: "areas", label: "Areas", question: "Does it name the towns, harbours or regions you work in?", fix: "Name the places you cover by name, so local searches find you." },
+  { key: "response", label: "Response", question: "Does it say how quickly you reply and the best way to reach you?", fix: "Say how quickly you reply, for example within one working day, and how to reach you." },
+  { key: "fresh", label: "Up to date", question: "Has it been updated in the last three months?", fix: "Add one recent project, review or photo so the profile looks active." },
+];
+
+// Unanswered counts as no. `limit` caps the fixes shown (Starter shows the top three).
+export function profileStrength(answers: Record<string, boolean>, items: ProfileItem[] = profileItems, limit = 3) {
+  const done = items.filter((item) => answers[item.key]).length;
+  const score = items.length ? Math.round((done / items.length) * 100) : 0;
+  const fixes = items.filter((item) => !answers[item.key]).slice(0, limit);
   return { score, done, fixes };
 }

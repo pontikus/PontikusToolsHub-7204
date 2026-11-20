@@ -12,7 +12,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     `<h3 class="pkst-form-title" style="margin-top:6px">If conditions are uncertain</h3>` +
     field("number", "riskItems", "Known risk items", state.riskItems, { hint: "Things that may or may not be needed: hidden rot, extra fixings, a second visit.", attrs: { min: 0, step: 10 } }) +
     choiceGroup("contingency", "Contingency", [["none", "None"], ["low", "Low · 10%"], ["medium", "Medium · 20%"], ["high", "High · 30%"]], state.contingency);
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "coastal-experts",
     audienceName: "Coastal Experts",
     type: "Calculator",
@@ -36,5 +36,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

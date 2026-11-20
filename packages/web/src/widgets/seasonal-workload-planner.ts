@@ -13,7 +13,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       <div class="pkst-months">${months
         .map((m, i) => `<label>${m}<input type="number" inputmode="decimal" min="0" max="31" step="1" data-row="${i}" data-f="d" value="${state.rows[i].d}" aria-label="${m} days of work"></label>`)
         .join("")}</div></fieldset>`;
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "coastal-experts",
     audienceName: "Coastal Experts",
     type: "Planner",
@@ -38,5 +38,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }
