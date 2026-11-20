@@ -72,6 +72,8 @@ export const css = `
 .pkst-button{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:12px 22px;border-radius:3px;font:600 14px Archivo,sans-serif;text-decoration:none;background:var(--n);color:var(--c) !important;border:0}
 .pkst-gold{background:var(--g);color:var(--n) !important}
 .pkst-note{font-size:13px;color:var(--m);margin-top:14px !important}
+.pkst-gate h3{font-size:26px;margin-top:6px}
+.pkst-gate-actions{display:flex;flex-wrap:wrap;gap:12px}
 .pkst-privacy{font-size:12px;color:var(--m);margin-top:18px !important}
 @media (max-width:860px){
   .pkst{padding:18px 16px}

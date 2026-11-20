@@ -27,3 +27,13 @@ Each `.html` file here is one complete tool: a `<div>` plus one `<script>`. It c
 ## Changing a tool
 
 Edit the source in `packages/web/src/widgets/` (the wording and rules are in `packages/web/src/web/lib/starter-tools.ts`), then run `bun run widgets` in `packages/web` to regenerate these files. Do not edit the `.html` files by hand.
+
+## Login check (Starter needs a pontikus.com account)
+
+Each snippet now starts with a short PHP block. Brilliant Directories runs it on the server:
+
+- Signed-in members get the tool. Their plan is passed in as `data-audience` and `data-level`
+  (from the live subscription IDs in `src/widgets/bd-gate.ts`), ready for Levels 1-3.
+- Everyone else sees a panel with the tool name, its promise, and Sign in (`/login`) and Register (`/join`) buttons.
+
+Paste the whole file into the widget's content. The PHP only works inside a BD widget, not in a plain HTML block.
