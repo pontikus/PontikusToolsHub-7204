@@ -5,6 +5,9 @@ import { defaultLinks, esc, type WidgetLinks } from "./core";
 import { bindState, loadList, saveList, shortDate, starterShell } from "./kit";
 
 export type TrackerConfig<E extends { date: string }> = {
+  audience?: string;
+  audienceName?: string;
+  addLabel?: string;
   storageKey: string;
   intro: string;
   noun: [one: string, many: string];
@@ -21,15 +24,15 @@ export function tracker<E extends { date: string }>(cfg: TrackerConfig<E>) {
     let entries = loadList<E>(cfg.storageKey);
     let note = "";
     const { form, result } = starterShell(root, links, {
-      audience: "sea-lovers",
-      audienceName: "Sea Lovers",
+      audience: cfg.audience ?? "sea-lovers",
+      audienceName: cfg.audienceName ?? "Sea Lovers",
       type: "Tracker",
       intro: cfg.intro,
       form: "",
       privacy: "Your log is saved only in this browser. Nothing is uploaded or saved to a server.",
     });
     const drawForm = () => {
-      form.innerHTML = cfg.form(state as Record<string, string | number>) + `<button type="button" class="pkst-button" data-act="add">Add to log</button>`;
+      form.innerHTML = cfg.form(state as Record<string, string | number>) + `<button type="button" class="pkst-button" data-act="add">${esc(cfg.addLabel ?? "Add to log")}</button>`;
     };
     const render = () => {
       const sorted = [...entries].sort((a, b) => b.date.localeCompare(a.date));
@@ -55,9 +58,11 @@ export function tracker<E extends { date: string }>(cfg: TrackerConfig<E>) {
         if (entries.length >= STARTER_TRACKER_LIMIT) note = `Starter keeps ${STARTER_TRACKER_LIMIT} ${cfg.noun[1]}. Delete one to add another.`;
         else {
           const e = cfg.toEntry(state as Record<string, string | number>);
-          if (!e) note = "Add a date first.";
+          if (!e) note = "Fill in the date and name first.";
           else {
             entries = [...entries, e];
+            Object.assign(state, cfg.draft());
+            drawForm();
             note = saveList(cfg.storageKey, entries) ? `${cfg.noun[0][0].toUpperCase()}${cfg.noun[0].slice(1)} added.` : "This browser is blocking storage, so the log will be lost when you leave the page.";
           }
         }

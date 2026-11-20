@@ -40,6 +40,19 @@ import {
   Trash2,
   Wallet,
   Waves,
+  CalendarClock,
+  FilePlus2,
+  Calculator,
+  ShieldAlert,
+  Route,
+  Handshake,
+  Percent,
+  ClipboardCheck,
+  HardHat,
+  Receipt,
+  Users,
+  GraduationCap,
+  BarChart3,
 } from "lucide-react";
 import { Header, Footer, PlaceholderLink } from "../components/brand";
 import { tools } from "../lib/catalogue";
@@ -78,6 +91,19 @@ const icons = [
   Caravan,
   Trash2,
   Recycle,
+  CalendarClock,
+  FilePlus2,
+  Calculator,
+  ShieldAlert,
+  Route,
+  Handshake,
+  Percent,
+  ClipboardCheck,
+  HardHat,
+  Receipt,
+  Users,
+  GraduationCap,
+  BarChart3,
 ];
 const groups = [
   {
