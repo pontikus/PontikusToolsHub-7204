@@ -17,6 +17,15 @@ export const mount = kitChecker<S>({
   rules: [
     {
       items: [
+        item("l1-cards", "Camera", "Second memory card, formatted in the camera", "level1"),
+        item("l1-cloth", "Protection", "Microfibre cloths for salt spray: one for the lens, one for hands", "level1"),
+        item("l1-tide-shot", "Before you go", "Check the tide for your spot: what is exposed and when the way back closes", "level1"),
+        item("l1-backup", "Before you go", "Plan to back up your cards the same day", "level1"),
+        item("l1-shotlist", "Before you go", "Write a short shot list so you don't miss the light while deciding", "level1"),
+      ],
+    },
+    {
+      items: [
         item("batteries", "Camera", "Charged batteries, plus a spare"),
         item("cards", "Camera", "Empty memory cards"),
         item("cloth", "Protection", "Microfibre cloths for salt spray on the lens"),

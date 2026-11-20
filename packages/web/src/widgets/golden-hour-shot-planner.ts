@@ -12,7 +12,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       field("number", "setup", "Walk and set-up (min)", state.setup, { attrs: { min: 0, max: 240, step: 5 } }),
     ) +
     field("time", "lowTide", "Low tide (optional)", state.lowTide, { hint: "Leave blank if the tide doesn't matter for this spot." });
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "sea-lovers",
     audienceName: "Sea Lovers",
     type: "Planner",
@@ -39,5 +39,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

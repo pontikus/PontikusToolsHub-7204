@@ -14,7 +14,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     ) +
     row2(field("text", "buddy", "Buddy's name", state.buddy, { attrs: { maxlength: 40 } }), field("tel", "buddyPhone", "Buddy's phone", state.buddyPhone, { attrs: { maxlength: 30 } })) +
     field("text", "shoreContact", "Shore contact", state.shoreContact, { hint: "Someone on land who knows your plan and when to raise the alarm.", attrs: { maxlength: 40 } });
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "sea-lovers",
     audienceName: "Sea Lovers",
     type: "Generator",
@@ -28,5 +28,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

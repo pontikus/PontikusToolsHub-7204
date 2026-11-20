@@ -113,6 +113,26 @@ export const css = `
 .pkst-days{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
 .pkst-days label{display:inline-flex;align-items:center;gap:4px;min-height:36px;padding:4px 8px;border:1px solid #c9c9be;border-radius:3px;font:12px "IBM Plex Mono",monospace;cursor:pointer}
 .pkst-days input{margin:0;accent-color:var(--n)}
+.pkst-levels{margin-top:24px;background:var(--p);border:1px solid var(--l);border-left:3px solid var(--g);border-radius:3px;padding:22px}
+.pkst-levels-head{display:flex;flex-wrap:wrap;gap:8px 16px;align-items:baseline;margin-bottom:14px}
+.pkst-levels-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.pkst-lv-card{border:1px solid #eee8db;border-radius:3px;padding:16px;min-width:0}
+.pkst-lv-card h4{margin-bottom:10px !important}
+.pkst-lv-wide{grid-column:1/-1}
+.pkst-lv-row{display:flex;gap:8px;margin-bottom:8px}
+.pkst-lv-row input[type=text]{min-height:40px}
+.pkst-lv-actions{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0}
+.pkst-lv-list{list-style:none;padding:0;margin:10px 0 0}
+.pkst-lv-list li{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;justify-content:space-between;padding:6px 0;border-top:1px solid #eee8db;font-size:13px}
+.pkst-lv-list li>span:first-of-type{flex:1;min-width:120px}
+.pkst-lv-tick input{width:18px;height:18px;accent-color:var(--n)}
+.pkst-compare{overflow-x:auto}
+.pkst-compare table{border-collapse:collapse;width:100%;font-size:13px}
+.pkst-compare th,.pkst-compare td{padding:8px 10px;border-bottom:1px solid #eee8db;text-align:left;vertical-align:top}
+.pkst-compare thead th{font:500 11px "IBM Plex Mono",monospace;letter-spacing:1px;text-transform:uppercase}
+.pkst-compare td span{display:block;font-family:"IBM Plex Mono",monospace}
+.pkst-cbar{display:block;height:6px;background:var(--g);border-radius:2px;margin-top:4px;max-width:100%}
+.pkst input[type=color]{width:64px;height:40px;padding:2px;border:1px solid #c9c9be;border-radius:3px;background:#fffefb}
 .pkst-privacy{font-size:12px;color:var(--m);margin-top:18px !important}
 @media (max-width:860px){
   .pkst{padding:18px 16px}
