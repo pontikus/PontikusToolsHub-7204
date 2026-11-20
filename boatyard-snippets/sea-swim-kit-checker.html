@@ -39,7 +39,7 @@ if (is_array($pkstU) && !empty($pkstU['user_id'])) {
 .pkst-hint{font-size:12px;color:var(--m)}
 .pkst input[type=range]{width:100%;accent-color:var(--n);min-height:44px;margin:0}
 .pkst-scale-ends{display:flex;justify-content:space-between;font:10px "IBM Plex Mono",monospace;color:var(--m)}
-.pkst input[type=number]{width:100%;min-height:46px;padding:10px 12px;border:1px solid #c9c9be;border-radius:3px;background:#fffefb;color:var(--n);font:inherit;font-size:14px}
+.pkst input[type=number],.pkst input[type=text],.pkst input[type=time],.pkst input[type=date],.pkst input[type=tel]{width:100%;min-height:46px;padding:10px 12px;border:1px solid #c9c9be;border-radius:3px;background:#fffefb;color:var(--n);font:inherit;font-size:14px}
 .pkst select{width:100%;min-height:46px;padding:10px 12px;border:1px solid #c9c9be;border-radius:3px;background:#fffefb;color:var(--n);font:inherit;font-size:14px}
 .pkst :focus-visible{outline:3px solid #006cc3;outline-offset:3px}
 .pkst-choices{display:flex;flex-wrap:wrap;gap:8px}
@@ -103,6 +103,22 @@ if (is_array($pkstU) && !empty($pkstU['user_id'])) {
 .pkst-saved li{display:flex;flex-wrap:wrap;gap:8px 12px;align-items:center;justify-content:space-between;padding:6px 0;font-size:13px;border-bottom:1px solid #eee8db}
 .pkst-saved li>span{font-family:"IBM Plex Mono",monospace;font-size:12px}
 .pkst-small{min-height:36px;padding:6px 12px;border:1px solid #bfc2b7;border-radius:3px;background:var(--c);color:var(--n);font:inherit;font-size:12px;cursor:pointer}
+.pkst-list{padding-left:20px;margin:8px 0 0}
+.pkst-list li{margin:0 0 6px;font-size:14px}
+.pkst-timeline{list-style:none;padding:0;margin:14px 0 0}
+.pkst-timeline li{display:grid;grid-template-columns:56px 1fr;gap:10px;padding:7px 0;border-top:1px solid #eee8db;font-size:14px}
+.pkst-timeline span{font:500 13px "IBM Plex Mono",monospace}
+.pkst-copy{margin-top:8px}
+.pkst-copy pre{white-space:pre-wrap;word-break:break-word;background:var(--c);border:1px solid var(--l);border-radius:3px;padding:14px;font:12px/1.6 "IBM Plex Mono",monospace;margin:0 0 10px;max-height:420px;overflow:auto}
+.pkst-day{border:0;border-top:1px solid var(--l);padding:14px 0 0;margin:0 0 6px;min-width:0}
+.pkst-day:first-of-type{border-top:0;padding-top:0}
+.pkst-day>legend{padding:0 0 8px;font-family:"IBM Plex Mono",monospace;letter-spacing:1px;font-size:11px;text-transform:uppercase}
+.pkst-row3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.pkst-have{margin:0}
+.pkst-have label{min-height:40px;padding:6px 0}
+.pkst-have input:checked+span{color:var(--n);text-decoration:none}
+.pkst-bars-wide li{grid-template-columns:64px 1fr auto}
+.pkst-form>.pkst-button{width:100%;cursor:pointer}
 .pkst-privacy{font-size:12px;color:var(--m);margin-top:18px !important}
 @media (max-width:860px){
   .pkst{padding:18px 16px}
@@ -111,8 +127,8 @@ if (is_array($pkstU) && !empty($pkstU['user_id'])) {
   .pkst-ladder li{grid-template-columns:1fr auto}
   .pkst-ladder li>span:nth-child(2){grid-column:1/-1;grid-row:2}
 }
-@media (max-width:420px){.pkst-months{grid-template-columns:repeat(2,minmax(0,1fr))}.pkst-row2{grid-template-columns:1fr}}
-`;var P={tool:(e)=>`/boatyard/${E[e]??e}`,verify:"/join-membership",upgrade:"/account/changelisting"},E={"rate-card":"rate-card-builder","credential-card":"credential-card-maker",availability:"availability-poster-maker","media-kit":"media-kit-builder"},r=(e)=>String(e).replace(/[&<>"']/g,(a)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[a]),C=!1;function x(e=document){if(C||e.getElementById("pkst-styles"))return;let a=e.createElement("style");a.id="pkst-styles",a.textContent=L,e.head.appendChild(a),C=!0}function T(e,a,o={}){let t=o.current??"starter",u=o.built??["starter"],c=k.indexOf(t);return`<section class="pkst-ladder" aria-label="What each level adds">
+@media (max-width:420px){.pkst-months{grid-template-columns:repeat(2,minmax(0,1fr))}.pkst-row2{grid-template-columns:1fr}.pkst-row3{grid-template-columns:1fr 1fr 1fr}}
+`;var P={tool:(e)=>`/boatyard/${E[e]??e}`,verify:"/join-membership",upgrade:"/account/changelisting"},E={"rate-card":"rate-card-builder","credential-card":"credential-card-maker",availability:"availability-poster-maker","media-kit":"media-kit-builder",journal:"trip-journal"},r=(e)=>String(e).replace(/[&<>"']/g,(a)=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"})[a]),C=!1;function x(e=document){if(C||e.getElementById("pkst-styles"))return;let a=e.createElement("style");a.id="pkst-styles",a.textContent=L,e.head.appendChild(a),C=!0}function T(e,a,o={}){let t=o.current??"starter",u=o.built??["starter"],c=k.indexOf(t);return`<section class="pkst-ladder" aria-label="What each level adds">
     <h3>Grow this tool with your membership</h3>
     <ol>${k.map((i,g)=>{let f=v[e]?.[g-1],n='<span class="pkst-tag">Coming soon</span>';if(i===t)n='<span class="pkst-tag">You are here</span>';else if(g<c)n='<span class="pkst-tag">Included</span>';else if(u.includes(i)&&o.upgrade)n=`<a class="pkst-tag pkst-upgrade" href="${r(o.upgrade)}">Upgrade to ${r(f??"unlock")}</a>`;else if(u.includes(i))n='<span class="pkst-tag">Available</span>';return`<li class="${i===t?"is-current":""}">
         <span class="pkst-level">${r(M(e,i))}</span>
@@ -128,9 +144,9 @@ if (is_array($pkstU) && !empty($pkstU['user_id'])) {
     </div>
     <div class="pkst-after"></div>
     <p class="pkst-privacy">Your answers stay in this browser. Nothing is uploaded or saved to a server.</p>
-  </div>`}function y(e,a,o,t){let u=o.map(([c,h])=>`<button type="button" class="pkst-choice${c===t?" is-on":""}" data-k="${r(e)}" data-v="${r(c)}" aria-pressed="${c===t}">${r(h)}</button>`).join("");return`<fieldset class="pkst-field"><legend class="pkst-label">${r(a)}</legend><div class="pkst-choices">${u}</div></fieldset>`}function q(e,a=P){x(e.ownerDocument);let o={type:"dip",group:"buddy",conditions:"calm"},t=new Set,u=()=>y("type","What kind of swim?",[["dip","Quick dip"],["distance","Longer swim"],["remote","Remote spot"]],o.type)+y("group","Who is swimming?",[["alone","Just me"],["buddy","Me and a buddy"],["group","A group"]],o.group)+y("conditions","Expected conditions",[["calm","Calm"],["choppy","Choppy"],["cold","Cold water"]],o.conditions);e.innerHTML=I({audienceName:"Sea Lovers",typeLabel:"Checker",intro:"Tell us about your next sea swim and get a kit and safety checklist to tick off before you go.",form:"",result:""});let c=e.querySelector(".pkst-form"),h=e.querySelector(".pkst-result");e.querySelector(".pkst-after").innerHTML=T("sea-lovers","Checker")+`<div>${A(a)}</div>`;let i=()=>{c.innerHTML=u();let n=w(o.type,o.group,o.conditions),s=n.filter((p)=>t.has(p.id)).length,l=["Kit","Safety","After your swim"].map((p)=>{let m=n.filter((d)=>d.group===p).map((d)=>`<li><label><input type="checkbox" data-tick="${r(d.id)}"${t.has(d.id)?" checked":""}><span>${r(d.text)}</span></label></li>`).join("");return m?`<li><h4>${p}</h4><ul class="pkst-check">${m}</ul></li>`:""}).join("");h.innerHTML=`
+  </div>`}function y(e,a,o,t){let u=o.map(([c,h])=>`<button type="button" class="pkst-choice${c===t?" is-on":""}" data-k="${r(e)}" data-v="${r(c)}" aria-pressed="${c===t}">${r(h)}</button>`).join("");return`<fieldset class="pkst-field"><legend class="pkst-label">${r(a)}</legend><div class="pkst-choices">${u}</div></fieldset>`}function B(e,a=P){x(e.ownerDocument);let o={type:"dip",group:"buddy",conditions:"calm"},t=new Set,u=()=>y("type","What kind of swim?",[["dip","Quick dip"],["distance","Longer swim"],["remote","Remote spot"]],o.type)+y("group","Who is swimming?",[["alone","Just me"],["buddy","Me and a buddy"],["group","A group"]],o.group)+y("conditions","Expected conditions",[["calm","Calm"],["choppy","Choppy"],["cold","Cold water"]],o.conditions);e.innerHTML=I({audienceName:"Sea Lovers",typeLabel:"Checker",intro:"Tell us about your next sea swim and get a kit and safety checklist to tick off before you go.",form:"",result:""});let c=e.querySelector(".pkst-form"),h=e.querySelector(".pkst-result");e.querySelector(".pkst-after").innerHTML=T("sea-lovers","Checker")+`<div>${A(a)}</div>`;let i=()=>{c.innerHTML=u();let n=w(o.type,o.group,o.conditions),s=n.filter((l)=>t.has(l.id)).length,p=["Kit","Safety","After your swim"].map((l)=>{let m=n.filter((d)=>d.group===l).map((d)=>`<li><label><input type="checkbox" data-tick="${r(d.id)}"${t.has(d.id)?" checked":""}><span>${r(d.text)}</span></label></li>`).join("");return m?`<li><h4>${l}</h4><ul class="pkst-check">${m}</ul></li>`:""}).join("");h.innerHTML=`
       <p class="pkst-eyebrow">YOUR CHECKLIST</p>
       <p class="pkst-progress">${s} of ${n.length} ticked${s===n.length?" · all set":""}</p>
-      <ul class="pkst-check">${l}</ul>
-      <p class="pkst-note">This list covers the basics. Local advice from lifeguards and swim groups comes first, and if in doubt, stay out.</p>`},g=(n)=>{let s=n.target.closest("button[data-k]");if(!s)return;let l=s.dataset.k;o[l]=s.dataset.v,i(),e.querySelector(`button[data-k="${l}"][data-v="${s.dataset.v}"]`)?.focus()},f=(n)=>{let s=n.target,l=s.dataset.tick;if(!l)return;if(s.checked)t.add(l);else t.delete(l);let p=w(o.type,o.group,o.conditions),m=p.filter((B)=>t.has(B.id)).length,d=h.querySelector(".pkst-progress");if(d)d.textContent=`${m} of ${p.length} ticked${m===p.length?" · all set":""}`};return e.addEventListener("click",g),e.addEventListener("change",f),i(),()=>{e.removeEventListener("click",g),e.removeEventListener("change",f)}}var b=document.getElementById("pkst-sea-swim-kit-checker");if(b&&!b.dataset.ready)b.dataset.ready="1",q(b);else if(document.querySelector(".pkst-gate"))x();})();
+      <ul class="pkst-check">${p}</ul>
+      <p class="pkst-note">This list covers the basics. Local advice from lifeguards and swim groups comes first, and if in doubt, stay out.</p>`},g=(n)=>{let s=n.target.closest("button[data-k]");if(!s)return;let p=s.dataset.k;o[p]=s.dataset.v,i(),e.querySelector(`button[data-k="${p}"][data-v="${s.dataset.v}"]`)?.focus()},f=(n)=>{let s=n.target,p=s.dataset.tick;if(!p)return;if(s.checked)t.add(p);else t.delete(p);let l=w(o.type,o.group,o.conditions),m=l.filter((q)=>t.has(q.id)).length,d=h.querySelector(".pkst-progress");if(d)d.textContent=`${m} of ${l.length} ticked${m===l.length?" · all set":""}`};return e.addEventListener("click",g),e.addEventListener("change",f),i(),()=>{e.removeEventListener("click",g),e.removeEventListener("change",f)}}var b=document.getElementById("pkst-sea-swim-kit-checker");if(b&&!b.dataset.ready)b.dataset.ready="1",B(b);else if(document.querySelector(".pkst-gate"))x();})();
 </script>
