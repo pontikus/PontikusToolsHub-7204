@@ -101,6 +101,12 @@ export const css = `
 .pkst-have input:checked+span{color:var(--n);text-decoration:none}
 .pkst-bars-wide li{grid-template-columns:64px 1fr auto}
 .pkst-form>.pkst-button{width:100%;cursor:pointer}
+.pkst textarea{width:100%;padding:10px 12px;border:1px solid #c9c9be;border-radius:3px;background:#fffefb;color:var(--n);font:inherit;font-size:14px;resize:vertical}
+.pkst-learners{list-style:none;padding:0;margin:8px 0 0}
+.pkst-learners>li{padding:12px 0;border-top:1px solid #eee8db}
+.pkst-learner{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+.pkst-learner span{font:12px "IBM Plex Mono",monospace;color:var(--m);margin-right:auto}
+.pkst-learners .pkst-choice{min-height:36px;padding:6px 10px;font-size:12px}
 .pkst-privacy{font-size:12px;color:var(--m);margin-top:18px !important}
 @media (max-width:860px){
   .pkst{padding:18px 16px}

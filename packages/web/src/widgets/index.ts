@@ -18,6 +18,19 @@ import { mount as coastalOvernightBudgetCalculator } from "./coastal-overnight-b
 import { mount as vanLifeEssentialsChecker } from "./van-life-essentials-checker";
 import { mount as beachCleanPlanner } from "./beach-clean-planner";
 import { mount as impactLog } from "./impact-log";
+import { mount as renewalsAndDeadlinesTracker } from "./renewals-and-deadlines-tracker";
+import { mount as matterIntakeBuilder } from "./matter-intake-builder";
+import { mount as dayRateCalculator } from "./day-rate-calculator";
+import { mount as riskRegisterBuilder } from "./risk-register-builder";
+import { mount as remoteVisitRoutePlanner } from "./remote-visit-route-planner";
+import { mount as dealAndLeadFollowUpTracker } from "./deal-and-lead-follow-up-tracker";
+import { mount as commissionCalculator } from "./commission-calculator";
+import { mount as clientBriefBuilder } from "./client-brief-builder";
+import { mount as siteVisitChecklistBuilder } from "./site-visit-checklist-builder";
+import { mount as jobQuoteCalculator } from "./job-quote-calculator";
+import { mount as sessionFillPlanner } from "./session-fill-planner";
+import { mount as learnerProgressTracker } from "./learner-progress-tracker";
+import { mount as seasonalWorkloadPlanner } from "./seasonal-workload-planner";
 
 export const widgets: Record<string, Mount> = {
   "trip-readiness-wheel": tripReadinessWheel,
@@ -38,4 +51,17 @@ export const widgets: Record<string, Mount> = {
   "van-life-essentials-checker": vanLifeEssentialsChecker,
   "beach-clean-planner": beachCleanPlanner,
   "impact-log": impactLog,
+  "renewals-and-deadlines-tracker": renewalsAndDeadlinesTracker,
+  "matter-intake-builder": matterIntakeBuilder,
+  "day-rate-calculator": dayRateCalculator,
+  "risk-register-builder": riskRegisterBuilder,
+  "remote-visit-route-planner": remoteVisitRoutePlanner,
+  "deal-and-lead-follow-up-tracker": dealAndLeadFollowUpTracker,
+  "commission-calculator": commissionCalculator,
+  "client-brief-builder": clientBriefBuilder,
+  "site-visit-checklist-builder": siteVisitChecklistBuilder,
+  "job-quote-calculator": jobQuoteCalculator,
+  "session-fill-planner": sessionFillPlanner,
+  "learner-progress-tracker": learnerProgressTracker,
+  "seasonal-workload-planner": seasonalWorkloadPlanner,
 };

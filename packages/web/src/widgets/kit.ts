@@ -149,6 +149,7 @@ export type KitConfig<S extends Record<string, string>> = {
   audience: string;
   audienceName: string;
   intro: string;
+  type?: ToolType;
   questions: [key: keyof S & string, label: string, options: [string, string][]][];
   defaults: S;
   groups: string[];
@@ -167,7 +168,7 @@ export function kitChecker<S extends Record<string, string>>(cfg: KitConfig<S>) 
     const { result } = starterShell(root, links, {
       audience: cfg.audience,
       audienceName: cfg.audienceName,
-      type: "Checker",
+      type: cfg.type ?? "Checker",
       intro: cfg.intro,
       form,
     });

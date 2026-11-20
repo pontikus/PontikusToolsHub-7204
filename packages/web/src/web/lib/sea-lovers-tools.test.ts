@@ -150,7 +150,7 @@ describe("beachCleanPlan", () => {
     expect(p.kit.find((k) => k.key === "pickers")!.qty).toBe(6);
     expect(p.missing.map((k) => k.key)).toEqual(["pickers", "firstaid", "hivis", "sharps"]);
     expect(p.timeline[0].at).toBe(570);
-    expect(p.timeline.at(-1)!.at).toBe(720);
+    expect(p.timeline[p.timeline.length - 1].at).toBe(720);
     expect(p.roles.find((r) => r.role === "Team leads")!.count).toBe(1);
   });
 });
