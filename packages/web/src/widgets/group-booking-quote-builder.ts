@@ -1,3 +1,4 @@
+import { quoteLonger } from "../web/lib/longer-formats";
 import { groupQuote } from "../web/lib/shoreline-tools";
 import { defaultLinks, esc, type WidgetLinks } from "./core";
 import { bindState, copyBlock, field, row2, selectField, starterShell } from "./kit";
@@ -40,7 +41,12 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  const lv = levels(state, render);
+  const lv = levels(state, render, {
+    longer: () => {
+      const r = groupQuote({ ...state, extras: state.rows.map((x) => ({ label: x.label, price: x.price, perPerson: x.perPerson === "yes" })) });
+      return quoteLonger(state, r.total, r.deposit);
+    },
+  });
   return () => {
     unbind();
     lv.destroy();

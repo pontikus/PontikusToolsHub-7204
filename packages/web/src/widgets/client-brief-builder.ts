@@ -1,3 +1,4 @@
+import { briefLonger } from "../web/lib/longer-formats";
 import { clientBrief, scopeChecks } from "../web/lib/coastal-experts-tools";
 import { defaultLinks, esc, type WidgetLinks } from "./core";
 import { bindState, checkList, copyBlock, field, starterShell } from "./kit";
@@ -40,7 +41,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  const lv = levels(state, render);
+  const lv = levels(state, render, {
+    longer: () => briefLonger(state),
+  });
   return () => {
     unbind();
     lv.destroy();

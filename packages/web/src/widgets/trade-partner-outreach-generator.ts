@@ -1,3 +1,4 @@
+import { outreachLonger } from "../web/lib/longer-formats";
 import { outreachMessages, partnerTypes, type PartnerType } from "../web/lib/shoreline-tools";
 import { defaultLinks, esc, type WidgetLinks } from "./core";
 import { bindState, checkList, copyBlock, field, row2, starterShell } from "./kit";
@@ -28,7 +29,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  const lv = levels(state, render);
+  const lv = levels(state, render, {
+    longer: () => outreachLonger(state),
+  });
   return () => {
     unbind();
     lv.destroy();

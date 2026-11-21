@@ -1,3 +1,4 @@
+import { retainerLonger } from "../web/lib/longer-formats";
 import { retainerProposal } from "../web/lib/shoreline-tools";
 import { defaultLinks, esc, type WidgetLinks } from "./core";
 import { bindState, copyBlock, field, row2, selectField, starterShell, textArea } from "./kit";
@@ -27,7 +28,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  const lv = levels(state, render);
+  const lv = levels(state, render, {
+    longer: () => retainerLonger(state),
+  });
   return () => {
     unbind();
     lv.destroy();

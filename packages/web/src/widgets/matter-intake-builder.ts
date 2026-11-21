@@ -1,3 +1,4 @@
+import { intakeLonger } from "../web/lib/longer-formats";
 import { intakeDocuments, intakeSheet } from "../web/lib/coastal-experts-tools";
 import { defaultLinks, type WidgetLinks } from "./core";
 import { bindState, checkList, copyBlock, field, row2, selectField, starterShell } from "./kit";
@@ -27,7 +28,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  const lv = levels(state, render);
+  const lv = levels(state, render, {
+    longer: () => intakeLonger(state),
+  });
   return () => {
     unbind();
     lv.destroy();

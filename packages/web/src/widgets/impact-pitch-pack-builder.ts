@@ -1,3 +1,4 @@
+import { pitchLonger } from "../web/lib/longer-formats";
 import { impactPitch, pitchAudiences, type PitchAudience } from "../web/lib/shoreline-tools";
 import { choiceGroup, defaultLinks, esc, type WidgetLinks } from "./core";
 import { bindState, copyBlock, field, row2, starterShell, textArea } from "./kit";
@@ -27,7 +28,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  const lv = levels(state, render);
+  const lv = levels(state, render, {
+    longer: () => pitchLonger(state),
+  });
   return () => {
     unbind();
     lv.destroy();
