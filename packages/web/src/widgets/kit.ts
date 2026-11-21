@@ -3,6 +3,7 @@
 import { levelLabel, levelOrder, unlockedLevel, type LevelKey, type ToolType } from "../web/lib/levels";
 import { buildChecklist, type CheckItem } from "../web/lib/sea-lovers-tools";
 import { choiceGroup, defaultLinks, esc, injectStyles, ladder, memberPlan, shell, verifyCta, type WidgetLinks } from "./core";
+import type { Longer } from "../web/lib/longer-formats";
 import { toneOptions, toneText } from "../web/lib/tone";
 import { atLeast as atLeastLevel, domMetrics, levelPanel, readJson, syncForm, textOf, writeJson, type CalEvent, type LevelHooks } from "./level-panel";
 
@@ -71,7 +72,8 @@ export function starterShell(
   // Adds the Level 1-3 panel. By default the summary is the result as text and, for
   // tools that work out numbers, compare reads the score and bars from the result.
   // Planners gain a date (for calendar reminders) and notes; Generators gain a tone.
-  const levels = (state: Record<string, unknown>, render: () => void, extra: Partial<Omit<LevelHooks, "state">> = {}) => {
+  const levels = (state: Record<string, unknown>, render: () => void, extraIn: Partial<Omit<LevelHooks, "state">> & { longer?: () => Longer[] } = {}) => {
+    const { longer, ...extra } = extraIn;
     const l1 = atLeastLevel(level, "level1");
     let more = "";
     let stopTone = () => {};
@@ -85,11 +87,14 @@ export function starterShell(
     }
     const signKey = `pkst-sign-${slug}`;
     const signOff = () => (atLeastLevel(level, "level3") ? readJson<string>(signKey, "").trim() : "");
-    if (l1 && o.type === "Generator") {
+    // A tool with its own tone setting keeps it.
+    if (l1 && o.type === "Generator" && !form.querySelector('[data-k="tone"]')) {
       state.tone ??= "friendly";
       more += selectField("tone", "Tone", toneOptions, String(state.tone), { hint: "Rewrites the message as written, more formal, or short and direct." });
       stopTone = applyTone(result, () => String(state.tone), signOff);
     }
+    // Level 2: the follow-on documents (longer formats), redrawn after every render.
+    const stopLonger = longer && atLeastLevel(level, "level2") ? appendLonger(result, longer) : () => {};
     if (more) form.insertAdjacentHTML("beforeend", `<h3 class="pkst-form-title" style="margin-top:6px">Your ${o.type === "Planner" ? "plan" : "message"}</h3>${more}`);
     const notes = () => (state.notes ? `\n\nNotes: ${String(state.notes)}` : "");
     const dated = () => (o.type === "Planner" && state.date ? `${shortDate(String(state.date))}\n` : "");
@@ -117,7 +122,7 @@ export function starterShell(
           : undefined,
       ...extra,
     });
-    return { ...lv, destroy: () => (stopTone(), lv.destroy()) };
+    return { ...lv, destroy: () => (stopTone(), stopLonger(), lv.destroy()) };
   };
   return { form, result, level, levels };
 }
@@ -414,4 +419,23 @@ function applyTone(result: HTMLElement, tone: () => string, sign: () => string) 
 export function syncMonths(root: HTMLElement, state: { occupancy: number[] } & Record<string, unknown>) {
   syncForm(root.querySelector<HTMLElement>(".pkst-form")!, state);
   root.querySelectorAll<HTMLInputElement>("input[data-m]").forEach((el) => (el.value = String(state.occupancy[Number(el.dataset.m)] ?? "")));
+}
+
+// Adds a "Longer formats" section under the result whenever the result is redrawn.
+function appendLonger(result: HTMLElement, longer: () => Longer[]) {
+  const run = () => {
+    if (result.querySelector(".pkst-longer")) return;
+    const blocks = longer();
+    if (!blocks.length) return;
+    result.insertAdjacentHTML(
+      "beforeend",
+      `<div class="pkst-longer"><p class="pkst-eyebrow" style="margin-top:20px">LONGER FORMATS</p>${blocks
+        .map((b) => `<h4 style="margin:14px 0 6px">${esc(b.label)}</h4>${copyBlock(b.text, "Copy")}`)
+        .join("")}</div>`,
+    );
+  };
+  const obs = new MutationObserver(run);
+  obs.observe(result, { childList: true });
+  run();
+  return () => obs.disconnect();
 }

@@ -1,3 +1,4 @@
+import { diveLonger } from "../web/lib/longer-formats";
 import { divePlanText } from "../web/lib/sea-lovers-tools";
 import { choiceGroup, defaultLinks, type WidgetLinks } from "./core";
 import { bindState, copyBlock, field, row2, starterShell, today } from "./kit";
@@ -28,7 +29,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  const lv = levels(state, render);
+  const lv = levels(state, render, {
+    longer: () => diveLonger(state),
+  });
   return () => {
     unbind();
     lv.destroy();

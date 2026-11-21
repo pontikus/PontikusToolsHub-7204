@@ -1,3 +1,4 @@
+import { welcomeLonger } from "../web/lib/longer-formats";
 import { welcomeMessage, type Welcome } from "../web/lib/shoreline-tools";
 import { choiceGroup, defaultLinks, esc, type WidgetLinks } from "./core";
 import { bindState, copyBlock, field, row2, starterShell, textArea } from "./kit";
@@ -31,7 +32,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  const lv = levels(state, render);
+  const lv = levels(state, render, {
+    longer: () => welcomeLonger(state),
+  });
   return () => {
     unbind();
     lv.destroy();

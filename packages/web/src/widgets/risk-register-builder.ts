@@ -1,3 +1,4 @@
+import { riskLonger } from "../web/lib/longer-formats";
 import { riskRegister, riskRegisterText, type Risk } from "../web/lib/coastal-experts-tools";
 import { defaultLinks, esc, type WidgetLinks } from "./core";
 import { bindState, copyBlock, field, selectField, starterShell } from "./kit";
@@ -50,7 +51,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  const lv = levels(state, render);
+  const lv = levels(state, render, {
+    longer: () => riskLonger(state.title, riskRegister(state.rows.map((r) => ({ name: r.name, likelihood: Number(r.likelihood), impact: Number(r.impact) }) as Risk))),
+  });
   return () => {
     unbind();
     lv.destroy();
