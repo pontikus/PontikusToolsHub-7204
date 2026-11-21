@@ -1,4 +1,4 @@
-import { seasonAreas, seasonAreasLevel1 } from "../web/lib/starter-tools";
+import { seasonAreas, seasonAreasFull, seasonAreasLevel1, seasonTips } from "../web/lib/starter-tools";
 import { readinessWheel } from "./readiness-wheel";
 
 export const mount = readinessWheel({
@@ -9,6 +9,12 @@ export const mount = readinessWheel({
   areas: seasonAreas,
   level1Areas: seasonAreasLevel1,
   bands: { low: "Exposed", mid: "Holding up", high: "Season ready" },
+  level1: {
+    intro: "Score all eight parts of your business before the next busy or quiet season. You get an overall score, a tip for every area, weakest first, and you can save results to compare seasons.",
+    areas: seasonAreasFull,
+    tips: seasonTips,
+    storageKey: "pkst-season-readiness-wheel-l1",
+  },
   // The Seaworthiness Ladder scores resilience (infrastructure, safety, compliance, risk);
   // this wheel stays on day-to-day season operations and points there for the rest.
   extraNote: () =>

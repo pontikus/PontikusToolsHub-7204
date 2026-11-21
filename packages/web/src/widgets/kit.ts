@@ -100,7 +100,7 @@ export function starterShell(
       type: o.type,
       state,
       summary: () => dated() + textOf(result) + notes(),
-      metrics: o.type === "Calculator" || o.type === "Assessment" ? () => domMetrics(result) : undefined,
+      metrics: o.type === "Calculator" || o.type === "Assessment" || o.type === "Checker" ? () => domMetrics(result) : undefined,
       events: o.type === "Planner" ? () => timelineEvents(result, String(state.date ?? ""), name) : undefined,
       custom:
         o.type === "Generator"
@@ -408,4 +408,10 @@ function applyTone(result: HTMLElement, tone: () => string, sign: () => string) 
   obs.observe(result, { childList: true, subtree: true });
   run();
   return () => obs.disconnect();
+}
+
+// Puts saved values back into a form that uses data-k fields and data-m month inputs.
+export function syncMonths(root: HTMLElement, state: { occupancy: number[] } & Record<string, unknown>) {
+  syncForm(root.querySelector<HTMLElement>(".pkst-form")!, state);
+  root.querySelectorAll<HTMLInputElement>("input[data-m]").forEach((el) => (el.value = String(state.occupancy[Number(el.dataset.m)] ?? "")));
 }

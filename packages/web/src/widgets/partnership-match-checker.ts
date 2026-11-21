@@ -9,7 +9,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   const form =
     field("text", "partner", "Possible partner", state.partner, { attrs: { maxlength: 60, placeholder: "Bay Refill Shop" } }) +
     partnerQuestions.map((q) => choiceGroup(q.key, q.q, opts, state[q.key])).join("");
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
     type: "Checker",
@@ -32,5 +32,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

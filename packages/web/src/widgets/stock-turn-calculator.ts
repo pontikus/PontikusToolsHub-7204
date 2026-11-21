@@ -26,7 +26,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
         </div></fieldset>`,
       )
       .join("");
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
     type: "Calculator",
@@ -57,5 +57,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

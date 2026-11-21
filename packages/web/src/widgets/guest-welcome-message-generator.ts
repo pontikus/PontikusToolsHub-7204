@@ -17,7 +17,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     textArea("houseNotes", "House notes", state.houseNotes, { hint: "One per line: bins, heating, tide times, the best café.", rows: 4 }) +
     row2(field("text", "host", "Your name", state.host, { attrs: { maxlength: 40 } }), field("tel", "contact", "Contact number", state.contact, { attrs: { maxlength: 30 } })) +
     choiceGroup("tone", "Tone", [["warm", "Warm"], ["short", "Short"]], state.tone);
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
     type: "Generator",
@@ -31,5 +31,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

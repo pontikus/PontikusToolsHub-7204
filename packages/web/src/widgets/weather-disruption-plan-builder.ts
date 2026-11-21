@@ -16,7 +16,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     field("text", "triggers", "Your limits", state.triggers, { hint: "When you cancel: wind, swell, lightning, a warning.", attrs: { maxlength: 100, placeholder: "wind over 20 knots or swell over 1.5 m" } }) +
     checkList("fallbacks", "Options you offer", fallbackOptions.map((f) => [f, f]), state.fallbacks) +
     row2(field("text", "channels", "How you reach customers", state.channels, { attrs: { maxlength: 60 } }), field("text", "refund", "Refund terms (optional)", state.refund, { attrs: { maxlength: 100, placeholder: "Refunds go back to your card within 5 days." } }));
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
     type: "Planner",
@@ -33,5 +33,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

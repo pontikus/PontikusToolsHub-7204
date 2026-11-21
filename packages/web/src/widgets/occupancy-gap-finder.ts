@@ -1,12 +1,14 @@
 import { months, occupancyGaps } from "../web/lib/starter-tools";
-import { defaultLinks, esc, injectStyles, ladder, shell, verifyCta, type WidgetLinks } from "./core";
+import { defaultLinks, esc, type WidgetLinks } from "./core";
+import { atLeast, starterShell, syncMonths, toolLevel } from "./kit";
 
 // Example figures only, so the result is not empty on first load. Labelled as such.
 const example = [35, 40, 50, 60, 70, 85, 95, 95, 75, 55, 40, 45];
 
 export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
-  injectStyles(root.ownerDocument);
-  const state = { rooms: 8, rate: 120, target: 70, currency: "£", occupancy: [...example] };
+  // Level 1: add what guests spend on top of the room, so the gap shows the full cost.
+  const full = atLeast(toolLevel(root, "shoreline-businesses"), "level1");
+  const state = { rooms: 8, rate: 120, target: 70, currency: "£", extra: 0, occupancy: [...example] };
   const num = (key: string, label: string, value: number, attrs: string) =>
     `<label class="pkst-field"><span class="pkst-label">${esc(label)}</span><input type="number" inputmode="decimal" data-k="${key}" value="${value}" ${attrs}></label>`;
   const form = `
@@ -19,26 +21,24 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       ${num("rate", "Average nightly rate", state.rate, 'min="0" step="1"')}
       ${num("target", "Target occupancy (%)", state.target, 'min="0" max="100" step="1"')}
     </div>
+    ${full ? num("extra", "Extra spend per occupied night (food, drinks, activities)", state.extra, 'min="0" step="1"') : ""}
     <fieldset class="pkst-field"><legend class="pkst-label">Occupancy by month (%)</legend>
       <span class="pkst-hint">Example figures are filled in. Replace them with your own.</span>
       <div class="pkst-months">${months
         .map((m, i) => `<label>${m}<input type="number" inputmode="decimal" min="0" max="100" step="1" data-m="${i}" value="${state.occupancy[i]}" aria-label="${m} occupancy percent"></label>`)
         .join("")}</div>
     </fieldset>`;
-  root.innerHTML = shell({
+  const { result, levels } = starterShell(root, links, {
+    audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
-    typeLabel: "Calculator",
+    type: "Calculator",
     intro: "Find the months where empty rooms cost you most, and how many extra nights would close each gap.",
     form,
-    result: "",
   });
-  const result = root.querySelector<HTMLElement>(".pkst-result")!;
-  root.querySelector<HTMLElement>(".pkst-after")!.innerHTML =
-    ladder("shoreline-businesses", "Calculator") + `<div>${verifyCta(links)}</div>`;
 
   const money = (n: number) => state.currency + Math.round(n).toLocaleString("en-GB");
   const render = () => {
-    const r = occupancyGaps(state);
+    const r = occupancyGaps({ ...state, rate: Number(state.rate) + (full ? Number(state.extra) || 0 : 0) });
     const bars = r.rows
       .map(
         (row) => `<li class="${r.worst && row.month === r.worst.month ? "is-worst" : ""}">
@@ -71,5 +71,15 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   root.addEventListener("input", onInput);
   render();
-  return () => root.removeEventListener("input", onInput);
+  const lv = levels(state, render, {
+    restore: (saved) => {
+      Object.assign(state, JSON.parse(JSON.stringify(saved)));
+      syncMonths(root, state);
+      render();
+    },
+  });
+  return () => {
+    root.removeEventListener("input", onInput);
+    lv.destroy();
+  };
 }

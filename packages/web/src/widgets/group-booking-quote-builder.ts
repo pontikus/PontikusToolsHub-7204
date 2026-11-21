@@ -23,7 +23,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       .join("") +
     `<div class="pkst-row3">${field("number", "discountPct", "Group discount (%)", state.discountPct, { attrs: { min: 0, max: 50, step: 5 } })}${field("number", "depositPct", "Deposit (%)", state.depositPct, { attrs: { min: 0, max: 100, step: 5 } })}${field("number", "validDays", "Valid for (days)", state.validDays, { attrs: { min: 1, max: 90, step: 1 } })}</div>` +
     selectField("currency", "Currency", [["£", "£"], ["€", "€"], ["$", "$"]], state.currency);
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
     type: "Generator",
@@ -40,7 +40,11 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }
 
 function selectFieldRow(i: number, value: string) {

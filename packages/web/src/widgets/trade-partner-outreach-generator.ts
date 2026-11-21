@@ -10,7 +10,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     field("text", "gain", "What partners get", state.gain, { hint: "A logo on the poster, a stall, tickets, a mention on stage.", attrs: { maxlength: 100 } }) +
     field("text", "sender", "Your name and business", state.sender, { attrs: { maxlength: 60 } }) +
     checkList("types", "Partners to contact", (Object.keys(partnerTypes) as PartnerType[]).map((k) => [k, partnerTypes[k].label]), state.types);
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "shoreline-businesses",
     audienceName: "Shoreline Businesses",
     type: "Generator",
@@ -28,5 +28,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

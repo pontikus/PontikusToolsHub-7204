@@ -18,6 +18,13 @@ export const mount = tracker<Account>({
     row2(field("text", "name", "Buyer or account", d.name, { attrs: { maxlength: 60, placeholder: "Quayside Restaurant" } }), selectField("kind", "Type", [["Trade account", "Trade account"], ["Wholesale buyer", "Wholesale buyer"], ["New buyer", "New buyer"]], String(d.kind))) +
     row2(field("date", "date", "Last order", d.date), selectField("gapDays", "Usually orders every", [["7", "Week"], ["14", "2 weeks"], ["30", "Month"], ["60", "2 months"], ["90", "3 months"]], String(d.gapDays))) +
     field("number", "value", "Usual order value", d.value, { attrs: { min: 0, step: 10 } }),
+  // One reminder per account, on the day the follow-up is due.
+  events: (entries) =>
+    entries.map((e) => {
+      const d = new Date(`${e.date}T12:00:00Z`);
+      d.setUTCDate(d.getUTCDate() + e.gapDays);
+      return { date: d.toISOString().slice(0, 10), title: `Follow up: ${e.name} (${e.kind})`, remindDays: 0 };
+    }),
   toEntry: (d) => (d.date && String(d.name).trim() ? { date: String(d.date), name: String(d.name).trim(), kind: String(d.kind), gapDays: num(d.gapDays, 1, 365), value: num(d.value) } : null),
   row: (e) => `${esc(e.name)} · ${esc(e.kind)}`,
   summary: (entries) => {
