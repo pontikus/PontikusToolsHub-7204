@@ -17,6 +17,15 @@ export const mount = kitChecker<S>({
   rules: [
     {
       items: [
+        item("l1-levels", "Vehicle", "Levelling blocks for sloping pitches", "level1"),
+        item("l1-fuses", "Vehicle", "Spare fuses and bulbs that fit your van", "level1"),
+        item("l1-gas", "Living", "Gas bottle checked and a spare, or a full electric hook-up lead", "level1"),
+        item("l1-water-plan", "Before you go", "Know where to fill water and empty waste on the way", "level1"),
+        item("l1-rules", "Before you go", "Check overnight parking rules at each stop", "level1"),
+      ],
+    },
+    {
+      items: [
         item("tyres", "Vehicle", "Tyre pressures and tread checked, spare included"),
         item("fluids", "Vehicle", "Oil, coolant and screen wash topped up"),
         item("gas", "Living", "Gas bottle full and the cooker tested"),

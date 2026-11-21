@@ -189,15 +189,18 @@ export function shotPlan(opts: { session: "morning" | "evening"; sunTime: string
 }
 
 // ---------- Snorkel Spot Scorecard ----------
-export type SpotRating = { name: string; access: number; conditions: number; confidence: number };
-const factorLabel = { access: "Access", conditions: "Conditions", confidence: "Your confidence" } as const;
+// Level 1 adds a fourth score, what there is to see.
+export type SpotRating = { name: string; access: number; conditions: number; confidence: number; life?: number };
+const factorLabel = { access: "Access", conditions: "Conditions", confidence: "Your confidence", life: "What there is to see" } as const;
 export function rankSpots(spots: SpotRating[]) {
   return spots
     .filter((s) => s.name.trim())
     .map((s, index) => {
-      const scores = { access: clampScore(s.access), conditions: clampScore(s.conditions), confidence: clampScore(s.confidence) };
-      const total = Math.round(((scores.access + scores.conditions + scores.confidence) / 3) * 10);
-      const weakKey = (Object.keys(scores) as (keyof typeof scores)[]).reduce((a, b) => (scores[b] < scores[a] ? b : a));
+      const scores: Partial<Record<keyof typeof factorLabel, number>> = { access: clampScore(s.access), conditions: clampScore(s.conditions), confidence: clampScore(s.confidence) };
+      if (s.life !== undefined) scores.life = clampScore(s.life);
+      const keys = Object.keys(scores) as (keyof typeof factorLabel)[];
+      const total = Math.round((keys.reduce((t, k) => t + scores[k]!, 0) / keys.length) * 10);
+      const weakKey = keys.reduce((a, b) => (scores[b]! < scores[a]! ? b : a));
       return { name: s.name.trim(), index, total, scores, concern: factorLabel[weakKey], concernKey: weakKey };
     })
     .sort((a, b) => b.total - a.total || a.index - b.index);

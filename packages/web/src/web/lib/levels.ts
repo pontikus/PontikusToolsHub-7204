@@ -32,31 +32,31 @@ export const ladderByType: Record<ToolType, Record<LevelKey, string>> = {
     starter: "Core score and your weakest area",
     level1: "Full question set, tailored tips, saved results",
     level2: "Visual chart, compare with a previous result, PDF export",
-    level3: "Custom questions and targets, branded and embeddable",
+    level3: "Your own questions and a target, branded report (embedding coming soon)",
   },
   Calculator: {
     starter: "One scenario, instant answer",
     level1: "Full inputs, saved scenarios, shareable summary",
     level2: "Side-by-side scenarios, charts, PDF export",
-    level3: "Custom fields and defaults, branded output, embeddable",
+    level3: "Your own fields and defaults, branded output (embedding coming soon)",
   },
   Planner: {
     starter: "A single plan with the essentials",
     level1: "Editable plan, reminders, saved plans",
     level2: "Multiple plans, calendar export, printable PDF",
-    level3: "Shared plans, branded output, embeddable",
+    level3: "Your own fields and defaults, branded output (shared plans and embedding coming soon)",
   },
   Checker: {
     starter: "A short checklist",
     level1: "Full checklist tailored to your answers, saved",
     level2: "Scored result, history, PDF report",
-    level3: "Custom checklist items, branded report, embeddable",
+    level3: "Your own checklist items, branded report (embedding coming soon)",
   },
   Generator: {
     starter: "One draft",
     level1: "Several variations, tone options, saved drafts",
     level2: "Longer formats, export to document, draft history",
-    level3: "Your own templates and voice, branded export, embeddable",
+    level3: "Your own sign-off and fields, branded export (embedding coming soon)",
   },
   Maker: {
     starter: "Make one item and download it",
@@ -68,7 +68,7 @@ export const ladderByType: Record<ToolType, Record<LevelKey, string>> = {
     starter: "Track a small number of items",
     level1: "Unlimited items, date reminders, saved",
     level2: "Dashboard view, spreadsheet export, history",
-    level3: "Custom fields, shared access, branded, embeddable",
+    level3: "Your own field, branded export (shared access and embedding coming soon)",
   },
 };
 

@@ -17,7 +17,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     row2(field("time", "start", "Start time", state.start), field("number", "hours", "How long (hours)", state.hours, { attrs: { min: 0.5, max: 8, step: 0.5 } })) +
     field("number", "volunteers", "Volunteers you expect", state.volunteers, { attrs: { min: 1, max: 500, step: 1 } }) +
     checkList("have", "What you already have", kitNames, state.have);
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "sea-lovers",
     audienceName: "Sea Lovers",
     type: "Planner",
@@ -40,5 +40,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

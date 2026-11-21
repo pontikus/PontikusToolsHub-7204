@@ -11,7 +11,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     ) +
     row2(field("time", "start", "Setting off", state.start), field("time", "backBy", "Back on shore by", state.backBy)) +
     choiceGroup("back", "Wind or tide on the way back", [["helping", "Helping"], ["none", "Neither"], ["against", "Against you"]], state.back);
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "sea-lovers",
     audienceName: "Sea Lovers",
     type: "Planner",
@@ -40,5 +40,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

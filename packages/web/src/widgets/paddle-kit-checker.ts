@@ -17,6 +17,15 @@ export const mount = kitChecker<S>({
   rules: [
     {
       items: [
+        item("l1-knife", "Kit", "Small safety knife on your buoyancy aid", "level1"),
+        item("l1-id", "Kit", "Your name and a contact number on the board or kayak", "level1"),
+        item("l1-wind-turn", "Before you launch", "Check when the wind is due to pick up or change direction, and be back before it does", "level1"),
+        item("l1-swim-test", "Safety", "Practised getting back on in deep water this season", "level1"),
+        item("l1-rinse", "Before you launch", "Plan to rinse and dry your kit after, so salt doesn't wear it out", "level1"),
+      ],
+    },
+    {
+      items: [
         item("pfd", "Kit", "Buoyancy aid that fits, done up"),
         item("paddle", "Kit", "Paddle, checked for cracks and loose joints"),
         item("water", "Kit", "Drinking water and a snack"),

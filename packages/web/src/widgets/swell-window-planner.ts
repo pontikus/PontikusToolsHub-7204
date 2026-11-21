@@ -32,7 +32,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       </fieldset>`,
       )
       .join("");
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "sea-lovers",
     audienceName: "Sea Lovers",
     type: "Planner",
@@ -62,5 +62,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }
