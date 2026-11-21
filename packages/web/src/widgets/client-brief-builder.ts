@@ -19,7 +19,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
     area("timeline", "Timeline") +
     area("constraints", "Constraints", "Budget, access, tides, permits, people.") +
     field("text", "approver", "Who signs off for the client", state.approver, { attrs: { maxlength: 60 } });
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "coastal-experts",
     audienceName: "Coastal Experts",
     type: "Generator",
@@ -40,5 +40,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

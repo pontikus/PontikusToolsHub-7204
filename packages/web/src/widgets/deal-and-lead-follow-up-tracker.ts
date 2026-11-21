@@ -16,6 +16,13 @@ export const mount = tracker<Deal>({
     field("text", "name", "Client or deal", d.name, { attrs: { maxlength: 60, placeholder: "Marina survey, North Quay" } }) +
     row2(selectField("stage", "Stage", dealStages.map((s) => [s, s]), String(d.stage)), field("number", "value", "Value", d.value, { attrs: { min: 0, step: 100 } })) +
     row2(field("date", "date", "Last contact", d.date), selectField("gapDays", "Follow up after", [["2", "2 days"], ["3", "3 days"], ["5", "5 days"], ["7", "1 week"], ["14", "2 weeks"], ["30", "1 month"]], String(d.gapDays))),
+  // One reminder per deal, on the day the follow-up is due.
+  events: (entries) =>
+    entries.map((e) => {
+      const d = new Date(`${e.date}T12:00:00Z`);
+      d.setUTCDate(d.getUTCDate() + e.gapDays);
+      return { date: d.toISOString().slice(0, 10), title: `Follow up: ${e.name} (${e.stage})`, remindDays: 0 };
+    }),
   toEntry: (d) => (d.date && String(d.name).trim() ? { date: String(d.date), name: String(d.name).trim(), stage: String(d.stage), value: num(d.value), gapDays: num(d.gapDays, 1, 365) } : null),
   row: (e) => `${esc(e.name)} · ${esc(e.stage)}`,
   summary: (entries) => {

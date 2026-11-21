@@ -15,7 +15,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       field("number", "billablePct", "Days you can bill (%)", state.billablePct, { hint: "The rest goes on admin and finding work.", attrs: { min: 1, max: 100, step: 5 } }),
     ) +
     field("number", "nichePct", "Specialist premium (%)", state.nichePct, { hint: "Optional: extra for scarce coastal or marine expertise.", attrs: { min: 0, max: 200, step: 5 } });
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "coastal-experts",
     audienceName: "Coastal Experts",
     type: "Calculator",
@@ -33,5 +33,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }

@@ -14,7 +14,7 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
       field("number", "fees", "Fees (listing, platform, card)", state.fees, { attrs: { min: 0, step: 10 } }),
       field("number", "costs", "Your costs on this deal", state.costs, { hint: "Travel, surveys, marketing.", attrs: { min: 0, step: 10 } }),
     );
-  const { result } = starterShell(root, links, {
+  const { result, levels } = starterShell(root, links, {
     audience: "coastal-experts",
     audienceName: "Coastal Experts",
     type: "Calculator",
@@ -37,5 +37,9 @@ export function mount(root: HTMLElement, links: WidgetLinks = defaultLinks) {
   };
   const unbind = bindState(root, state, render);
   render();
-  return unbind;
+  const lv = levels(state, render);
+  return () => {
+    unbind();
+    lv.destroy();
+  };
 }
